@@ -1,5 +1,5 @@
-#include <cards.h>
 #include <stdlib.h>
+#include "cards.h"
 
 /* Implementation of Fisher-Yates shuffle using Durstenfeld's Algorithm 235. */
 void shuffle(deck d) {
