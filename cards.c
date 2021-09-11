@@ -1,6 +1,13 @@
 #include <stdlib.h>
 #include "cards.h"
 
+void initDeck(deck d) {
+    char i;
+    for (i = 0; i < DECK_SIZE; i++) {
+        d[i] = i;
+    }
+}
+
 /* Implementation of Fisher-Yates shuffle using Durstenfeld's Algorithm 235. */
 void shuffle(deck d) {
     int i;

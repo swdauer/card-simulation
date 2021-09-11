@@ -6,5 +6,6 @@
 typedef char deck[DECK_SIZE];
 
 void shuffle(deck);
+void initDeck(deck);
 
 #endif // CARDS_H
