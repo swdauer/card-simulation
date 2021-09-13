@@ -2,7 +2,13 @@
 
 ## Purpose
 
-Here will be a library to simulate a deck of cards. It will provide the deck and deck operations such as shuffling as well as card operations like determining if two cards are the same rank or suit.
+The lib folder holds utility operations for conducting a simulation with a deck of cards. 
+The root folder contains the simulations themselves.
+
+## Lib
+
+- Cards (`cards.c` and `cards.h`) contains functions used for operating on a deck and cards.
+- Poker (`poker.c` and `poker.h`) contains functions for operating on poker hands.
 
 ## Layout
 
