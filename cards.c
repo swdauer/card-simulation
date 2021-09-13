@@ -39,3 +39,17 @@ void printMtoN(deck d, char m, char n) {
 void printDeck(deck d) {
     printMtoN(d, 0, DECK_SIZE - 1);
 }
+
+void quicksortMtoN(deck d, char m, char n) {
+    if (m >= n) return;
+
+    char i, partIndex = m;
+    for (i = m + 1; i <= n; i++) {
+        if (d[i] < d[partIndex]) {
+            swap(d + partIndex + 1, d + i);
+            swap(d + partIndex, d + partIndex + 1);
+        }
+    }
+    quicksortMtoN(d, m, partIndex - 1);
+    quicksortMtoN(d, partIndex + 1, n);
+}

@@ -15,4 +15,6 @@ void shuffle(deck);
 void printMtoN(deck, char, char);
 void printDeck(deck);
 
+void quicksortMtoN(deck, char, char);
+
 #endif // CARDS_H
