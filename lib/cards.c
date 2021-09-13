@@ -39,9 +39,14 @@ void shuffle(deck d) {
     shuffleMtoN(d, 0, DECK_SIZE - 1);
 }
 
+void printCard(card c) {
+    printf("%c%c", rankChar(c), suitChar(c));
+}
+
 void printMtoN(deck d, char m, char n) {
     for (; m <= n; m++) {
-        printf("%c%c%c", rankChar(d[m]), suitChar(d[m]), m != n ? ',' : '\n');
+        printCard(d[m]);
+        printf("%c", m != n ? ',' : '\n');
     }
 }
 
@@ -67,4 +72,11 @@ hand* addToHand(hand* head, hand* allocSpace, card c) {
     allocSpace->c = c;
     allocSpace->next = head;
     return allocSpace;
+}
+
+void printHand(hand* head) {
+    for (; head != NULL; head = head->next) {
+        printCard(head->c);
+        printf("%c", head->next != NULL ? ' ' : '\n');
+    }
 }

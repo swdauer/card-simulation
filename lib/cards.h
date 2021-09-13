@@ -26,8 +26,10 @@ void swap(card*, card*);
 void shuffleMtoN(deck, char m, char n);
 void shuffle(deck);
 
+void printCard(card);
 void printMtoN(deck, char m, char n);
 void printDeck(deck);
+void printHand(hand*);
 
 // void quicksortMtoN(deck, char m, char n);
 
