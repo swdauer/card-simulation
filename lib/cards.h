@@ -11,6 +11,10 @@
 
 typedef char card;
 typedef card deck[DECK_SIZE];
+typedef struct hand {
+    card c;
+    struct hand* next;
+} hand;
 
 void initDeck(deck);
 
@@ -19,12 +23,14 @@ char suitChar(card);
 
 void swap(card*, card*);
 
-void shuffleMtoN(deck, char, char);
+void shuffleMtoN(deck, char m, char n);
 void shuffle(deck);
 
-void printMtoN(deck, char, char);
+void printMtoN(deck, char m, char n);
 void printDeck(deck);
 
-void quicksortMtoN(deck, char, char);
+// void quicksortMtoN(deck, char m, char n);
+
+hand* addToHand(hand* head, hand* allocSpace, card);
 
 #endif // CARDS_H
