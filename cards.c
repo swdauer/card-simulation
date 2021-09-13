@@ -9,8 +9,15 @@ void initDeck(deck d) {
     }
 }
 
-void swap(char* x, char* y) {
-    char holder = *x;
+char rankChar(card c) {
+    static char ranks[] = { 'A', '2', '3', '4',
+                            '5', '6', '7', '8',
+                            '9', 'T', 'J', 'Q', 'K' };
+    return ranks[c / NUM_SUITS];
+}
+
+void swap(card* x, card* y) {
+    card holder = *x;
     *x = *y;
     *y = holder;
 }
@@ -19,9 +26,6 @@ void swap(char* x, char* y) {
 void shuffleMtoN(deck d, char m, char n) {
     for (; n > m; n--) {
         int j = rand() % (n - m + 1);
-        // char holder = d[n];
-        // d[n] = d[m + j];
-        // d[m + j] = holder;
         swap(d + n, d + (m + j));
     }
 }

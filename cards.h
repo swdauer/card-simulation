@@ -1,13 +1,17 @@
 #ifndef CARDS_H
 #define CARDS_H
 
+#define NUM_SUITS 4
 #define DECK_SIZE 52
 
-typedef char deck[DECK_SIZE];
+typedef char card;
+typedef card deck[DECK_SIZE];
 
 void initDeck(deck);
 
-void swap(char*, char*);
+char rankChar(card);
+
+void swap(card*, card*);
 
 void shuffleMtoN(deck, char, char);
 void shuffle(deck);
