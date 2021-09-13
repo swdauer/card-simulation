@@ -7,6 +7,8 @@ typedef char deck[DECK_SIZE];
 
 void initDeck(deck);
 
+void swap(char*, char*);
+
 void shuffleMtoN(deck, char, char);
 void shuffle(deck);
 
