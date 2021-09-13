@@ -4,6 +4,9 @@
 #define NUM_SUITS 4
 #define DECK_SIZE 52
 
+#define SUIT(c) ((c) % NUM_SUITS)
+#define RANK(c) ((c) / NUM_SUITS)
+
 typedef char card;
 typedef card deck[DECK_SIZE];
 

@@ -13,12 +13,12 @@ char rankChar(card c) {
     static char ranks[] = { 'A', '2', '3', '4',
                             '5', '6', '7', '8',
                             '9', 'T', 'J', 'Q', 'K' };
-    return ranks[c / NUM_SUITS];
+    return ranks[RANK(c)];
 }
 
 char suitChar(card c) {
     static char suits[] = { 'S', 'H', 'D', 'C' };
-    return suits[c % NUM_SUITS];
+    return suits[SUIT(c)];
 }
 
 void swap(card* x, card* y) {
