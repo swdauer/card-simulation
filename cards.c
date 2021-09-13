@@ -16,6 +16,11 @@ char rankChar(card c) {
     return ranks[c / NUM_SUITS];
 }
 
+char suitChar(card c) {
+    static char suits[] = { 'S', 'H', 'D', 'C' };
+    return suits[c % NUM_SUITS];
+}
+
 void swap(card* x, card* y) {
     card holder = *x;
     *x = *y;
@@ -36,7 +41,7 @@ void shuffle(deck d) {
 
 void printMtoN(deck d, char m, char n) {
     for (; m <= n; m++) {
-        printf("%d%c", d[m], m != n ? ',' : '\n');
+        printf("%c%c%c", rankChar(d[m]), suitChar(d[m]), m != n ? ',' : '\n');
     }
 }
 

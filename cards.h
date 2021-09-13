@@ -10,6 +10,7 @@ typedef card deck[DECK_SIZE];
 void initDeck(deck);
 
 char rankChar(card);
+char suitChar(card);
 
 void swap(card*, card*);
 
