@@ -5,8 +5,11 @@
 
 typedef char deck[DECK_SIZE];
 
-void shuffle(deck);
 void initDeck(deck);
+
+void shuffleMtoN(deck, char, char);
+void shuffle(deck);
+
 void printMtoN(deck, char, char);
 void printDeck(deck);
 
