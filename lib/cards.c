@@ -10,9 +10,8 @@ void initDeck(deck d) {
 }
 
 char rankChar(card c) {
-    static char ranks[] = { 'A', '2', '3', '4',
-                            '5', '6', '7', '8',
-                            '9', 'T', 'J', 'Q', 'K' };
+    static char ranks[] = { '2', '3', '4', '5', '6', '7', '8',
+                            '9', 'T', 'J', 'Q', 'K', 'A' };
     return ranks[RANK(c)];
 }
 
