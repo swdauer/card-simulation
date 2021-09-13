@@ -1,5 +1,5 @@
 a.out
 *.exe
 .Rproj.user
-test-data
+data-test
 test.c
