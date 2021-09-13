@@ -20,13 +20,12 @@ void shuffle(deck d) {
     }
 }
 
-void printN(deck d, char n) {
-    char i;
-    for (i = 0; i < n; i++) {
-        printf("%d%c", d[i], i != n - 1 ? ',' : '\n');
+void printMtoN(deck d, char m, char n) {
+    for (; m <= n; m++) {
+        printf("%d%c", d[m], m != n ? ',' : '\n');
     }
 }
 
 void printDeck(deck d) {
-    printN(d, DECK_SIZE);
+    printMtoN(d, 0, DECK_SIZE - 1);
 }

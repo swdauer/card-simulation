@@ -7,7 +7,7 @@ typedef char deck[DECK_SIZE];
 
 void shuffle(deck);
 void initDeck(deck);
-void printN(deck, char);
+void printMtoN(deck, char, char);
 void printDeck(deck);
 
 #endif // CARDS_H
