@@ -2,9 +2,10 @@
 #define CARDS_H
 
 #define NUM_SUITS 4
-#define LG_NUM_SUITS 2
+#define LG_NUM_SUITS 2 // this should be the log base 2 of NUM_SUITS
 #define DECK_SIZE 52
 
+// These macros only work if NUM_SUITS is a power of 2
 #define SUIT(c) ((c) & (NUM_SUITS - 1)) // get last two bits from c
 #define RANK(c) ((c) >> LG_NUM_SUITS) // get c / NUM_SUITS
 
