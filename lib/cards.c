@@ -77,6 +77,6 @@ hand* addToHand(hand* head, hand* allocSpace, card c) {
 void printHand(hand* head) {
     for (; head != NULL; head = head->next) {
         printCard(head->c);
-        printf("%c", head->next != NULL ? ' ' : '\n');
+        printf("%c", head->next != NULL ? ',' : '\n');
     }
 }
