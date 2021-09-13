@@ -1,11 +1,10 @@
 #ifndef CARDS_H
 #define CARDS_H
 
-#define NUM_SUITS 4
 #define DECK_SIZE 52
 
-#define SUIT(c) ((c) % NUM_SUITS)
-#define RANK(c) ((c) / NUM_SUITS)
+#define SUIT(c) ((c) & 3) // get last to bits from c
+#define RANK(c) ((c) >> 2) // get c / 4
 
 typedef char card;
 typedef card deck[DECK_SIZE];
