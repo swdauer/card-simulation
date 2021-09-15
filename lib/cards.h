@@ -21,14 +21,17 @@ void printCard(card);
 /* end card type */
 
 /* hand type */
-typedef struct hand {
-    card c;
-    struct hand* next;
-} hand;
+// Each card here is a single bit. 
+// Each element of hand is a different card rank. 
+// Each on bit in the unsigned char corresponds to a different suit in increasing significance of S, H, D, C.
+// E.G. hand[0] == 0x1 then the hand contains the 2 of spades and no other twos
+// hand[0] == 0x3 then the hand contains the 2 of spades and hearts and no other twos
+// hand[12] == 0xC then the hand contains the ace of diamonds and clubs and no other aces
+typedef unsigned char hand[NUM_RANKS];
 
-void printHand(hand*);
+void printHand(hand);
 
-hand* addToHand(hand* head, hand* allocSpace, card);
+void addToHand(hand, card);
 /* end hand type */
 
 /* deck type */

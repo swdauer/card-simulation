@@ -53,29 +53,24 @@ void printDeck(deck d) {
     printMtoN(d, 0, DECK_SIZE - 1);
 }
 
-// void quicksortMtoN(deck d, char m, char n) {
-//     if (m >= n) return;
-
-//     char i, partIndex = m;
-//     for (i = m + 1; i <= n; i++) {
-//         if (d[i] < d[partIndex]) {
-//             swap(d + partIndex + 1, d + i);
-//             swap(d + partIndex, d + partIndex + 1);
-//         }
-//     }
-//     quicksortMtoN(d, m, partIndex - 1);
-//     quicksortMtoN(d, partIndex + 1, n);
-// }
-
-hand* addToHand(hand* head, hand* allocSpace, card c) {
-    allocSpace->c = c;
-    allocSpace->next = head;
-    return allocSpace;
+void addToHand(hand h, card c) {
+    h[RANK(c)] |= 0x1 << SUIT(c);
 }
 
-void printHand(hand* head) {
-    for (; head != NULL; head = head->next) {
-        printCard(head->c);
-        printf("%c", head->next != NULL ? ',' : '\n');
+void printHand(hand h) {
+    int i;
+    char printed1 = 0;
+    for (i = 0; i < NUM_RANKS; i++) {
+        if (h[i]) {
+            int j;
+            for (j = 0; j < NUM_SUITS; j++) {
+                if (h[i] & (0x1 << j)) {
+                    if (printed1) printf(",");
+                    printCard((i << LG_NUM_SUITS) + j);
+                    printed1 = 1;
+                }
+            }
+        }
     }
+    if (printed1) printf("\n");
 }
