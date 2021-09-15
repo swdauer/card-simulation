@@ -21,6 +21,8 @@ void printCard(card);
 /* end card type */
 
 /* hand type */
+typedef unsigned short cardSet;
+
 /* For byRank:
 Each card here is a single bit.
 Each element of byRank is a different card rank.
@@ -39,8 +41,8 @@ bySuit[0] == 0x8 then the hand contains the 5 of spades and no other spades
 bySuit[0] == 0x9 then the hand contains the 2 and 5 of spades and no other spades
 */
 typedef struct {
-    unsigned short byRank[NUM_RANKS];
-    unsigned short bySuit[NUM_SUITS];
+    cardSet byRank[NUM_RANKS];
+    cardSet bySuit[NUM_SUITS];
 } hand;
 
 void printHand(hand*);
