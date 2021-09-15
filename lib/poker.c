@@ -47,6 +47,31 @@ void checkFlush(handEvaluation* e, hand* h) {
                     count++;
                 }
             }
+            return;
+        }
+    }
+}
+
+void checkStraight(handEvaluation* e, hand* h) {
+    int i;
+    for (i = NUM_RANKS - 1; i >= 0 + 4; i--) {
+        char straightAtI = 1;
+        int j;
+        for (j = i; j >= i - 4; j--) {
+            straightAtI = straightAtI && h->byRank[j];
+        }
+        if (straightAtI) {
+            e->handType = STRAIGHT;
+            for (j = i; j >= i - 4; j--) {
+                int k;
+                for (k = 0; k < NUM_SUITS; k++) {
+                    if (h->byRank[j] & (0x1 << k)) {
+                        e->h.byRank[j] = 0x1 << k;
+                        break;
+                    }
+                }
+            }
+            return;
         }
     }
 }

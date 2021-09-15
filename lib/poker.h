@@ -21,7 +21,7 @@ unsigned char countBits(cardSet);
 // Otherwise they change handEvaluation->handType to the proper constant.
 // The provided handEvaluation must be fully zeroed for each of the check functions.
 void checkFlush(handEvaluation*, hand*);
-// void checkStraight(handEvaluation*, hand*);
+void checkStraight(handEvaluation*, hand*);
 // void checkStraightFlush(handEvaluation*, hand*);
 
 // void checkSets(handEvaluation*, hand*);
