@@ -24,7 +24,7 @@ void printCard(card);
 /* For byRank:
 Each card here is a single bit.
 Each element of byRank is a different card rank.
-Each on bit in the unsigned char corresponds to a different suit in increasing significance of S, H, D, C.
+Each on bit in the unsigned short corresponds to a different suit in increasing significance of S, H, D, C.
 E.G. byRank[0] == 0x1 then the hand contains the 2 of spades and no other twos
 byRank[0] == 0x3 then the hand contains the 2 of spades and hearts and no other twos
 byRank[12] == 0xC then the hand contains the ace of diamonds and clubs and no other aces
@@ -39,7 +39,7 @@ bySuit[0] == 0x8 then the hand contains the 5 of spades and no other spades
 bySuit[0] == 0x9 then the hand contains the 2 and 5 of spades and no other spades
 */
 typedef struct {
-    unsigned char byRank[NUM_RANKS];
+    unsigned short byRank[NUM_RANKS];
     unsigned short bySuit[NUM_SUITS];
 } hand;
 
