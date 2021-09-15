@@ -53,18 +53,19 @@ void printDeck(deck d) {
     printMtoN(d, 0, DECK_SIZE - 1);
 }
 
-void addToHand(hand h, card c) {
-    h[RANK(c)] |= 0x1 << SUIT(c);
+void addToHand(hand* h, card c) {
+    h->byRank[RANK(c)] |= 0x1 << SUIT(c);
+    h->bySuit[SUIT(c)] |= 0x1 << RANK(c);
 }
 
-void printHand(hand h) {
+void printHand(hand* h) {
     int i;
     char printed1 = 0;
     for (i = 0; i < NUM_RANKS; i++) {
-        if (h[i]) {
+        if (h->byRank[i]) {
             int j;
             for (j = 0; j < NUM_SUITS; j++) {
-                if (h[i] & (0x1 << j)) {
+                if (h->byRank[i] & (0x1 << j)) {
                     if (printed1) printf(",");
                     printCard((i << LG_NUM_SUITS) + j);
                     printed1 = 1;

@@ -21,17 +21,31 @@ void printCard(card);
 /* end card type */
 
 /* hand type */
-// Each card here is a single bit. 
-// Each element of hand is a different card rank. 
-// Each on bit in the unsigned char corresponds to a different suit in increasing significance of S, H, D, C.
-// E.G. hand[0] == 0x1 then the hand contains the 2 of spades and no other twos
-// hand[0] == 0x3 then the hand contains the 2 of spades and hearts and no other twos
-// hand[12] == 0xC then the hand contains the ace of diamonds and clubs and no other aces
-typedef unsigned char hand[NUM_RANKS];
+/* For byRank:
+Each card here is a single bit.
+Each element of byRank is a different card rank.
+Each on bit in the unsigned char corresponds to a different suit in increasing significance of S, H, D, C.
+E.G. byRank[0] == 0x1 then the hand contains the 2 of spades and no other twos
+byRank[0] == 0x3 then the hand contains the 2 of spades and hearts and no other twos
+byRank[12] == 0xC then the hand contains the ace of diamonds and clubs and no other aces
+*/
+/* For bySuit:
+Each card here is a single bit.
+Each element of bySuit is a different card suit.
+Each on bit in the unsigned short corresponds to a different rank
+    in increasing significance of 2, 3, 4, 5, 6, 7, 8, 9, T, J, Q, K, A
+E.G. bySuit[0] == 0x1 then the hand contains the 2 of spades and no other spades
+bySuit[0] == 0x8 then the hand contains the 5 of spades and no other spades
+bySuit[0] == 0x9 then the hand contains the 2 and 5 of spades and no other spades
+*/
+typedef struct {
+    unsigned char byRank[NUM_RANKS];
+    unsigned short bySuit[NUM_SUITS];
+} hand;
 
-void printHand(hand);
+void printHand(hand*);
 
-void addToHand(hand, card);
+void addToHand(hand*, card);
 /* end hand type */
 
 /* deck type */
