@@ -74,4 +74,30 @@ void checkStraight(handEvaluation* e, hand* h) {
             return;
         }
     }
+
+    // Check for an Ace to 5 straight
+    char aTo5Straight = 1;
+    aTo5Straight = aTo5Straight && h->byRank[NUM_RANKS - 1];
+    for (i = 0; i < 4; i++) {
+        aTo5Straight = h->byRank[i] && aTo5Straight;
+    }
+    if (aTo5Straight) {
+        e->handType = STRAIGHT;
+        int j;
+        for (j = 0; j < NUM_SUITS; j++) {
+            if (h->byRank[NUM_RANKS - 1] & (0x1 << j)) {
+                e->h.byRank[NUM_RANKS - 1] = 0x1 << j;
+                break;
+            }
+        }
+        for (j = 0; j < 4; j++) {
+            int k;
+            for (k = 0; k < NUM_SUITS; k++) {
+                if (h->byRank[j] & (0x1 << k)) {
+                    e->h.byRank[j] = 0x1 << k;
+                    break;
+                }
+            }
+        }
+    }
 }
