@@ -40,8 +40,6 @@ Need a way to compare hand strength
 - If a hand has an equal type than another that the types are compared by card rank until there is a difference
 - All hands are constructed with five cards only
 - Will compare hands by evaluating type and comparing, if the type is the same then compare card by card
-- In order to facilitate easy comparison the evaluate hand function will return a 2d-tuple of hand type and sorted hand
-    - The sorting will order based on relevance
-    - E.g. a hand containing a pair will have the pair cards first followed by the cards in decreasing rank
-    - A hand containing a triple will have the triple cards first followed by the cards in decreasing rank
-    - A hand containing a full house will have the triple followed by the pair regardless of rank
+- In order to facilitate easy comparison the evaluate hand function will return a 2d-tuple of hand type and hand with byRank with only the five cards relevant to the hand
+- If the hand doesn't contain a straight or a flush, then I don't need to check for a straight flush
+- I can check for all the sets at the same time i.e. four of a kind, full house, three of a kind, two pair, and pair
