@@ -9,6 +9,7 @@
 // These macros only work if NUM_SUITS is a power of 2
 #define SUIT(c) ((c) & (NUM_SUITS - 1)) // get last two bits from c
 #define RANK(c) ((c) >> LG_NUM_SUITS) // get c / NUM_SUITS
+#define RANK_SUIT_TO_CARD(r, s) (((r) << LG_NUM_SUITS) + (s))
 
 typedef unsigned char card;
 
