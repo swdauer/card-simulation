@@ -8,10 +8,10 @@ The root folder contains the simulations themselves.
 
 ## lib
 
-- Cards (`cards.c` and `cards.h`) contains functions used for operating on a deck and cards.
-- Poker (`poker.c` and `poker.h`) contains functions for operating on poker hands.
+- cards (`cards.c` and `cards.h`) contains functions used for operating on a deck and cards.
+- poker (`poker.c` and `poker.h`) contains functions for operating on poker hands.
 
-### Cards
+### cards
 
 For a standard 52 card deck
 
@@ -20,7 +20,7 @@ For a standard 52 card deck
 - Use modulus with 4 to determine suit
 - Use division by 4 to determine rank
 
-### Poker
+### poker
 
 Need a way to compare hand strength
 
