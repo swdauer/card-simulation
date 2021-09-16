@@ -67,7 +67,7 @@ void printHand(hand* h) {
             for (j = 0; j < NUM_SUITS; j++) {
                 if (h->byRank[i] & (0x1 << j)) {
                     if (printed1) printf(",");
-                    printCard((i << LG_NUM_SUITS) + j);
+                    printCard(RANK_SUIT_TO_CARD(i, j));
                     printed1 = 1;
                 }
             }
