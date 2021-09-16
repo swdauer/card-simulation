@@ -1,6 +1,6 @@
 - modify printHand to use RANK_SUIT_TO_CARD (cards)
+- add addToHand(hand*, rank, suit) function (cards)
 --------------------------------
 - finish check functions (poker)
 - finish evaluate function (poker)
-- add addToHand(hand*, rank, suit) function (cards)
 - modify check functions to use new addToHand (poker)

@@ -48,6 +48,7 @@ typedef struct {
 
 void printHand(hand*);
 
+void addToHandRS(hand*, unsigned char rank, unsigned char suit);
 void addToHand(hand*, card);
 /* end hand type */
 

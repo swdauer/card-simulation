@@ -53,9 +53,13 @@ void printDeck(deck d) {
     printMtoN(d, 0, DECK_SIZE - 1);
 }
 
+void addToHandRS(hand* h, unsigned char rank, unsigned char suit) {
+    h->byRank[rank] |= 0x1 << suit;
+    h->bySuit[suit] |= 0x1 << rank;
+}
+
 void addToHand(hand* h, card c) {
-    h->byRank[RANK(c)] |= 0x1 << SUIT(c);
-    h->bySuit[SUIT(c)] |= 0x1 << RANK(c);
+    addToHandRS(h, RANK(c), SUIT(c));
 }
 
 void printHand(hand* h) {
