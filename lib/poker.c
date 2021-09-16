@@ -43,7 +43,7 @@ void checkFlush(handEvaluation* e, hand* h) {
             int j, count = 0;
             for (j = NUM_RANKS - 1; j > 0 && count < 5; j--) {
                 if ((h->bySuit[i]) & (0x1 << j)) {
-                    e->h.byRank[j] = 0x1 << i;
+                    addToHandRS(&(e->h), j, i);
                     count++;
                 }
             }
@@ -66,7 +66,7 @@ void checkStraight(handEvaluation* e, hand* h) {
                 int k;
                 for (k = 0; k < NUM_SUITS; k++) {
                     if (h->byRank[j] & (0x1 << k)) {
-                        e->h.byRank[j] = 0x1 << k;
+                        addToHandRS(&(e->h), j, k);
                         break;
                     }
                 }
@@ -86,7 +86,7 @@ void checkStraight(handEvaluation* e, hand* h) {
         int j;
         for (j = 0; j < NUM_SUITS; j++) {
             if (h->byRank[NUM_RANKS - 1] & (0x1 << j)) {
-                e->h.byRank[NUM_RANKS - 1] = 0x1 << j;
+                addToHandRS(&(e->h), NUM_RANKS - 1, j);
                 break;
             }
         }
@@ -94,7 +94,7 @@ void checkStraight(handEvaluation* e, hand* h) {
             int k;
             for (k = 0; k < NUM_SUITS; k++) {
                 if (h->byRank[j] & (0x1 << k)) {
-                    e->h.byRank[j] = 0x1 << k;
+                    addToHandRS(&(e->h), j, k);
                     break;
                 }
             }
