@@ -101,3 +101,32 @@ void checkStraight(handEvaluation* e, hand* h) {
         }
     }
 }
+
+void checkStraightFlush(handEvaluation* e, hand* h) {
+    cardSet bitMask = 0x1F << (NUM_RANKS - 5);
+    int i, j;
+    for (j = 12; j >= 4; j--) {
+        for (i = 0; i < NUM_SUITS; i++) {
+            // printf("%X\n%X\n\n", bitMask, h->bySuit[i]);
+            if ((bitMask & h->bySuit[i]) == bitMask) {
+                e->handType = STRAIGHT_FLUSH;
+                int k;
+                for (k = j; k >= j - 4; k--)
+                    addToHandRS(&(e->h), k, i);
+                return;
+            }
+        }
+        bitMask >>= 1;
+    }
+    // check for Ace to Five straight flush
+    bitMask = 0x100F;
+    for (i = 0; i < NUM_SUITS; i++) {
+        if ((bitMask & h->bySuit[i]) == bitMask) {
+            e->handType = STRAIGHT_FLUSH;
+            addToHandRS(&(e->h), NUM_RANKS - 1, i);
+            for (j = 0; j < 4; j++)
+                addToHandRS(&(e->h), j, i);
+            return;
+        }
+    }
+}
