@@ -1,5 +1,6 @@
 #include "cards.h"
 #include "poker.h"
+#include <stdio.h>
 
 unsigned char countBits(cardSet s) {
     unsigned char count = 0;
@@ -129,4 +130,15 @@ void checkStraightFlush(handEvaluation* e, hand* h) {
             return;
         }
     }
+}
+
+void printHandEval(handEvaluation* e) {
+    static char* handTypeStr[] = {
+        "", "straight_flush", "four_of_a_kind",
+        "full_house", "flush", "straight", "three_of_a_kind",
+        "two_pair", "pair", "nothing"
+    };
+
+    printf("%s,", handTypeStr[e->handType]);
+    printHand(&(e->h));
 }

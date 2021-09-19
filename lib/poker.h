@@ -26,4 +26,6 @@ void checkStraightFlush(handEvaluation*, hand*);
 
 // void checkSets(handEvaluation*, hand*);
 
+void printHandEval(handEvaluation*);
+
 #endif // POKER_H
