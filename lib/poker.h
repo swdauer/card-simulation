@@ -24,7 +24,8 @@ void checkFlush(handEvaluation*, hand*);
 void checkStraight(handEvaluation*, hand*);
 void checkStraightFlush(handEvaluation*, hand*);
 
-// void checkSets(handEvaluation*, hand*);
+// If there are no sets this returns the highest 5 cards by rank
+void checkSets(handEvaluation*, hand*);
 
 void printHandEval(handEvaluation*);
 

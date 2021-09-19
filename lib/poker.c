@@ -106,7 +106,7 @@ void checkStraight(handEvaluation* e, hand* h) {
 void checkStraightFlush(handEvaluation* e, hand* h) {
     cardSet bitMask = 0x1F << (NUM_RANKS - 5);
     int i, j;
-    for (j = 12; j >= 4; j--) {
+    for (j = NUM_RANKS - 1; j >= 4; j--) {
         for (i = 0; i < NUM_SUITS; i++) {
             // printf("%X\n%X\n\n", bitMask, h->bySuit[i]);
             if ((bitMask & h->bySuit[i]) == bitMask) {
@@ -130,6 +130,146 @@ void checkStraightFlush(handEvaluation* e, hand* h) {
             return;
         }
     }
+}
+
+void checkSets(handEvaluation* e, hand* h) {
+    unsigned char maxSize = 0, penMaxSize = 0;
+    unsigned char top5[5] = {};
+    int top5Alloc = 0;
+    unsigned char maxRank, penMaxRank;
+    int i;
+    for (i = NUM_RANKS - 1; i >= 0; i--) {
+        unsigned char currSize = countBits(h->byRank[i]);
+        if (currSize > 0 && top5Alloc < 5) {
+            top5[top5Alloc++] = i;
+        }
+        if (currSize > maxSize) {
+            penMaxRank = maxRank;
+            penMaxSize = maxSize;
+            maxRank = i;
+            maxSize = currSize;
+        } else if (currSize > penMaxSize) {
+            penMaxRank = i;
+            penMaxSize = currSize;
+        }
+    }
+
+    if (maxSize == 4) { // four of a kind
+        e->handType = FOUR_OF_A_KIND;
+        for (i = 0; i < NUM_SUITS; i++) {
+            addToHandRS(&(e->h), maxRank, i);
+        }
+        for (i = 0; i < 5; i++) {
+            if (top5[i] != maxRank) {
+                int j;
+                for (j = 0; j < NUM_SUITS; j++) {
+                    if (h->byRank[top5[i]] & (0x1 << j)) {
+                        addToHandRS(&(e->h), top5[i], j);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        return;
+    }
+
+    if (maxSize == 3 && penMaxSize >= 2) { // full house
+        e->handType = FULL_HOUSE;
+        for (i = 0; i < NUM_SUITS; i++) {
+            if (h->byRank[maxRank] & (0x1 << i))
+                addToHandRS(&(e->h), maxRank, i);
+        }
+        int count = 0;
+        for (i = 0; i < NUM_SUITS; i++) {
+            if (h->byRank[penMaxRank] & (0x1 << i)) {
+                count++;
+                addToHandRS(&(e->h), penMaxRank, i);
+                if (count == 2) break;
+            }
+        }
+        return;
+    }
+
+    if (maxSize == 3) { // three of a kind
+        e->handType = THREE_OF_A_KIND;
+        for (i = 0; i < NUM_SUITS; i++) {
+            if (h->byRank[maxRank] & (0x1 << i))
+                addToHandRS(&(e->h), maxRank, i);
+        }
+        int count = 0;
+        for (i = 0; i < 5; i++) {
+            if (top5[i] != maxRank) {
+                int j;
+                for (j = 0; j < NUM_SUITS; j++) {
+                    if (h->byRank[top5[i]] & (0x1 << j)) {
+                        addToHandRS(&(e->h), top5[i], j);
+                        count++;
+                        break;
+                    }
+                }
+            }
+            if (count == 2) return;
+        }
+    }
+
+    if (maxSize == 2 && penMaxSize == 2) { // two pair
+        e->handType = TWO_PAIR;
+        for (i = 0; i < NUM_SUITS; i++) {
+            if (h->byRank[maxRank] & (0x1 << i))
+                addToHandRS(&(e->h), maxRank, i);
+            if (h->byRank[penMaxRank] & (0x1 << i))
+                addToHandRS(&(e->h), penMaxRank, i);
+        }
+        for (i = 0; i < 5; i++) {
+            if (top5[i] != maxRank && top5[i] != penMaxRank) {
+                int j;
+                for (j = 0; j < NUM_SUITS; j++) {
+                    if (h->byRank[top5[i]] & (0x1 << j)) {
+                        addToHandRS(&(e->h), top5[i], j);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        return;
+    }
+
+    if (maxSize == 2) { // pair
+        e->handType = PAIR;
+        for (i = 0; i < NUM_SUITS; i++) {
+            if (h->byRank[maxRank] & (0x1 << i))
+                addToHandRS(&(e->h), maxRank, i);
+        }
+        int count = 0;
+        for (i = 0; i < 5; i++) {
+            if (top5[i] != maxRank) {
+                int j;
+                for (j = 0; j < NUM_SUITS; j++) {
+                    if (h->byRank[top5[i]] & (0x1 << j)) {
+                        addToHandRS(&(e->h), top5[i], j);
+                        count++;
+                        break;
+                    }
+                }
+            }
+            if (count == 3) return;
+        }
+    }
+
+    // nothing
+    e->handType = NOTHING;
+    for (i = 0; i < 5; i++) {
+        int j;
+        for (j = 0; j < NUM_SUITS; j++) {
+            if (h->byRank[top5[i]] & (0x1 << j)) {
+                addToHandRS(&(e->h), top5[i], j);
+                break;
+            }
+        }
+    }
+    return;
 }
 
 void printHandEval(handEvaluation* e) {
