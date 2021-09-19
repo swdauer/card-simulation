@@ -1,6 +1,6 @@
+#include <stdio.h>
 #include "cards.h"
 #include "poker.h"
-#include <stdio.h>
 
 unsigned char countBits(cardSet s) {
     unsigned char count = 0;

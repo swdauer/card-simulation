@@ -43,9 +43,12 @@ void printCard(card c) {
 }
 
 void printMtoN(deck d, char m, char n) {
+    char printed1 = 0;
     for (; m <= n; m++) {
+        if (printed1) printf(",");
         printCard(d[m]);
-        printf("%c", m != n ? ',' : '\n');
+        printed1 = 1;
+        // printf("%c", m != n ? ',' : '\n');
     }
 }
 
@@ -77,5 +80,5 @@ void printHand(hand* h) {
             }
         }
     }
-    if (printed1) printf("\n");
+    // if (printed1) printf("\n");
 }

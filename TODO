@@ -2,8 +2,8 @@
 - add addToHand(hand*, rank, suit) function (cards)
 - modify check functions to use new addToHand (poker)
 - Add printHandEval (poker)
---------------------------------
 - finish check functions (poker)
-- finish evaluate function (poker)
 - remove newlines from print functions
+--------------------------------
+- finish evaluate function (poker)
 - refactor mirrored structure in for looks in check functions (poker)
