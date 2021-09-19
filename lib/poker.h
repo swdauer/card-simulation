@@ -14,7 +14,7 @@ typedef struct {
 
 unsigned char countBits(cardSet);
 
-// handEvaluation evaluate(hand*);
+handEvaluation evaluate(hand*);
 
 // These three check functions change handEvaluation->handType
 // to 0 if they don't contain the respective hand type.

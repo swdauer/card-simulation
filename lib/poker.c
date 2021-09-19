@@ -10,28 +10,28 @@ unsigned char countBits(cardSet s) {
     return count;
 }
 
-// handEvaluation evaluate(hand* h) {
-//     handEvaluation flush = {};
-//     handEvaluation straight = {};
-//     handEvaluation straightFlush = {};
-//     handEvaluation sets = {};
+handEvaluation evaluate(hand* h) {
+    handEvaluation flush = {};
+    handEvaluation straight = {};
+    handEvaluation straightFlush = {};
+    handEvaluation sets = {};
 
-//     checkFlush(&flush, h);
-//     checkStraight(&straight, h);
+    checkFlush(&flush, h);
+    checkStraight(&straight, h);
 
-//     if (flush.handType && straight.handType) {
-//         checkStraightFlush(&straightFlush, h);
-//         if (straightFlush.handType) return straightFlush;
-//     }
+    if (flush.handType && straight.handType) {
+        checkStraightFlush(&straightFlush, h);
+        if (straightFlush.handType) return straightFlush;
+    }
 
-//     checkSets(&sets, h);
+    checkSets(&sets, h);
 
-//     if (sets.handType == FOUR_OF_A_KIND) return sets;
-//     else if (sets.handType == FULL_HOUSE) return sets;
-//     else if (flush.handType == FLUSH) return flush;
-//     else if (straight.handType == STRAIGHT) return straight;
-//     else return sets;
-// }
+    if (sets.handType == FOUR_OF_A_KIND) return sets;
+    else if (sets.handType == FULL_HOUSE) return sets;
+    else if (flush.handType == FLUSH) return flush;
+    else if (straight.handType == STRAIGHT) return straight;
+    else return sets;
+}
 
 // checkFlush returns after finding the first flush.
 // If the hand size is less than 10, then this will always be the best flush.
