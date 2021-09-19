@@ -279,6 +279,6 @@ void printHandEval(handEvaluation* e) {
         "two_pair", "pair", "nothing"
     };
 
-    printf("%s,", handTypeStr[e->handType]);
-    printHand(&(e->h));
+    printf("%s", handTypeStr[e->handType]);
+    // printHand(&(e->h));
 }
