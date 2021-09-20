@@ -68,7 +68,7 @@ int main() {
     initDeck(d);
 
     unsigned long long numTrials;
-    scanf("%d", &numTrials);
+    scanf("%llu", &numTrials);
     holdemHeadsUp(numTrials, d);
     return 0;
 }
