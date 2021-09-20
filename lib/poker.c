@@ -294,7 +294,7 @@ int compareHE(handEvaluation* e1, handEvaluation* e2) {
     }
 
     // comparing straights
-    if (e1 == STRAIGHT_FLUSH || e1 == STRAIGHT) {
+    if (e1->handType == STRAIGHT_FLUSH || e1->handType == STRAIGHT) {
         unsigned char e1Top, e2Top;
 
         int i;
@@ -321,7 +321,7 @@ int compareHE(handEvaluation* e1, handEvaluation* e2) {
     }
 
     // comparing flushes and nothings
-    if (e1 == FLUSH || e1 == NOTHING) {
+    if (e1->handType == FLUSH || e1->handType == NOTHING) {
         unsigned char e1CurrPosn = NUM_RANKS, e2CurrPosn = NUM_RANKS - 1;
         int count;
 
@@ -345,7 +345,7 @@ int compareSetsHE(handEvaluation* e1, handEvaluation* e2) {
         e2Ranks[i] = NUM_RANKS;
     }
 
-    for (i = NUM_RANKS - 1; i >= 0; i--) {
+    for (i = NUM_RANKS - 1; i <= NUM_RANKS - 1; i--) {
         if (e1->h.byRank[i]) {
             unsigned int e1Count = countBits(e1->h.byRank[i]);
             if (e1Count == 4 || e1Count == 3) e1Ranks[0] = i;
