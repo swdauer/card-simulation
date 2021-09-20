@@ -338,34 +338,65 @@ int compareHE(handEvaluation* e1, handEvaluation* e2) {
 }
 
 int compareSetsHE(handEvaluation* e1, handEvaluation* e2) {
-    if (e1 == FOUR_OF_A_KIND) {
-        unsigned char e1SetRank = NUM_RANKS,
-            e2SetRank = NUM_RANKS,
-            e1CardRank = NUM_RANKS,
-            e2CardRank = NUM_RANKS;
+    unsigned char e1Ranks[4], e2Ranks[4];
+    unsigned char i;
+    for (i = 0; i < 4; i++) {
+        e1Ranks[i] = NUM_RANKS;
+        e2Ranks[i] = NUM_RANKS;
+    }
 
-        unsigned char i;
-        for (i = NUM_RANKS - 1; i >= 0; i--) {
-            if (e1->h.byRank[i]) {
-                if (countBits(e1->h.byRank[i]) == 4) e1SetRank = i;
-                else e1CardRank = i;
+    for (i = NUM_RANKS - 1; i >= 0; i--) {
+        if (e1->h.byRank[i]) {
+            unsigned int e1Count = countBits(e1->h.byRank[i]);
+            if (e1Count == 4 || e1Count == 3) e1Ranks[0] = i;
+            else if (e1Count == 2) {
+                if (e1->handType == FULL_HOUSE) e1Ranks[1] = i;
+                else if (e1->handType == TWO_PAIR) {
+                    if (e1Ranks[0] == NUM_RANKS) e1Ranks[0] = i;
+                    else e1Ranks[1] = i;
+                } else e1Ranks[0] = i;
+            } else { // e1Count = 1
+                if (e1->handType == FOUR_OF_A_KIND) e1Ranks[1] = i;
+                else if (e1->handType == THREE_OF_A_KIND || e1->handType == PAIR) {
+                    int j;
+                    for (j = 1; j < 4; j++) {
+                        if (e1Ranks[j] != NUM_RANKS) {
+                            e1Ranks[j] = i;
+                            break;
+                        }
+                    }
+                } else e1Ranks[2] = i; // e1->handType == TWO_PAIR
             }
-            if (e2->h.byRank[i]) {
-                if (countBits(e2->h.byRank[i]) == 4) e2SetRank = i;
-                else e2CardRank = i;
-            }
-            if (e1SetRank != NUM_RANKS &&
-                e1CardRank != NUM_RANKS &&
-                e2SetRank != NUM_RANKS &&
-                e2CardRank != NUM_RANKS)
-                break;
         }
-        if (e1SetRank > e2SetRank) return 1;
-        else if (e1SetRank < e2SetRank) return -1;
-        else {
-            if (e1CardRank > e2CardRank) return 1;
-            else if (e1CardRank < e2CardRank) return -1;
-            else return 0;
+        if (e2->h.byRank[i]) {
+            unsigned int e2Count = countBits(e2->h.byRank[i]);
+            if (e2Count == 4 || e2Count == 3) e2Ranks[0] = i;
+            else if (e2Count == 2) {
+                if (e2->handType == FULL_HOUSE) e2Ranks[1] = i;
+                else if (e2->handType == TWO_PAIR) {
+                    if (e2Ranks[0] == NUM_RANKS) e2Ranks[0] = i;
+                    else e2Ranks[1] = i;
+                } else e2Ranks[0] = i;
+            } else { // e2Count = 1
+                if (e2->handType == FOUR_OF_A_KIND) e2Ranks[1] = i;
+                else if (e2->handType == THREE_OF_A_KIND || e2->handType == PAIR) {
+                    int j;
+                    for (j = 1; j < 4; j++) {
+                        if (e2Ranks[j] != NUM_RANKS) {
+                            e2Ranks[j] = i;
+                            break;
+                        }
+                    }
+                } else e2Ranks[2] = i; // e2->handType == TWO_PAIR
+            }
         }
     }
+
+    for (i = 0; i < 4; i++) {
+        if (e1Ranks[i] == NUM_RANKS) break;
+
+        if (e1Ranks[i] > e2Ranks[i]) return 1;
+        else if (e1Ranks[i] < e2Ranks[i]) return -1;
+    }
+    return 0;
 }

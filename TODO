@@ -8,3 +8,5 @@
 --------------------------------
 - add function to compare handEvaluations (poker)
 - refactor mirrored structure in for looks in check functions (poker)
+- the check sets function should return something different depending on the check being run (poker)
+- refactor checks and handEvaluation to make the compareHE easier (poker)
