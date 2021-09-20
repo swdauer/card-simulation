@@ -282,3 +282,90 @@ void printHandEval(handEvaluation* e) {
     printf("%s", handTypeStr[e->handType]);
     // printHand(&(e->h));
 }
+
+// If e1 is better than e2 then return 1
+// If e2 is better than e1 then return -1
+// If e1 ties with e2 then return 0
+int compareHE(handEvaluation* e1, handEvaluation* e2) {
+    if (e1->handType < e2->handType) {
+        return 1;
+    } else if (e1->handType > e2->handType) {
+        return -1;
+    }
+
+    // comparing straights
+    if (e1 == STRAIGHT_FLUSH || e1 == STRAIGHT) {
+        unsigned char e1Top, e2Top;
+
+        int i;
+        for (i = NUM_RANKS - 1; i >= 0; i--) {
+            if (e1->h.byRank[i]) {
+                e1Top = i;
+                break;
+            }
+        }
+        if (e1Top == NUM_RANKS - 1 && e1->h.byRank[4])
+            e1Top = 4;
+        for (i = NUM_RANKS - 1; i >= 0; i--) {
+            if (e2->h.byRank[i]) {
+                e2Top = i;
+                break;
+            }
+        }
+        if (e2Top == NUM_RANKS - 1 && e2->h.byRank[4])
+            e2Top = 4;
+
+        if (e1Top > e2Top) return 1;
+        else if (e1Top < e2Top) return -1;
+        else return 0;
+    }
+
+    // comparing flushes and nothings
+    if (e1 == FLUSH || e1 == NOTHING) {
+        unsigned char e1CurrPosn = NUM_RANKS, e2CurrPosn = NUM_RANKS - 1;
+        int count;
+
+        for (count = 0; count < 5; count++) {
+            for (e1CurrPosn = e1CurrPosn - 1; !(e1->h.byRank[e1CurrPosn]); e1CurrPosn--);
+            for (e2CurrPosn = e2CurrPosn - 1; !(e2->h.byRank[e2CurrPosn]); e2CurrPosn--);
+            if (e1CurrPosn > e2CurrPosn) return 1;
+            else if (e1CurrPosn < e2CurrPosn) return -1;
+        }
+        return 0;
+    }
+
+    return compareSetsHE(e1, e2);
+}
+
+int compareSetsHE(handEvaluation* e1, handEvaluation* e2) {
+    if (e1 == FOUR_OF_A_KIND) {
+        unsigned char e1SetRank = NUM_RANKS,
+            e2SetRank = NUM_RANKS,
+            e1CardRank = NUM_RANKS,
+            e2CardRank = NUM_RANKS;
+
+        unsigned char i;
+        for (i = NUM_RANKS - 1; i >= 0; i--) {
+            if (e1->h.byRank[i]) {
+                if (countBits(e1->h.byRank[i]) == 4) e1SetRank = i;
+                else e1CardRank = i;
+            }
+            if (e2->h.byRank[i]) {
+                if (countBits(e2->h.byRank[i]) == 4) e2SetRank = i;
+                else e2CardRank = i;
+            }
+            if (e1SetRank != NUM_RANKS &&
+                e1CardRank != NUM_RANKS &&
+                e2SetRank != NUM_RANKS &&
+                e2CardRank != NUM_RANKS)
+                break;
+        }
+        if (e1SetRank > e2SetRank) return 1;
+        else if (e1SetRank < e2SetRank) return -1;
+        else {
+            if (e1CardRank > e2CardRank) return 1;
+            else if (e1CardRank < e2CardRank) return -1;
+            else return 0;
+        }
+    }
+}

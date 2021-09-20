@@ -29,4 +29,10 @@ void checkSets(handEvaluation*, hand*);
 
 void printHandEval(handEvaluation*);
 
+// If e1 is better than e2 then return 1
+// If e2 is better than e1 then return -1
+// If e1 ties with e2 then return 0
+int compareHE(handEvaluation* e1, handEvaluation* e2);
+int compareSetsHE(handEvaluation* e1, handEvaluation* e2);
+
 #endif // POKER_H

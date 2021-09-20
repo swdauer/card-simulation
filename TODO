@@ -6,5 +6,5 @@
 - remove newlines from print functions
 - finish evaluate function (poker)
 --------------------------------
-- add function to compare handEvaluations
+- add function to compare handEvaluations (poker)
 - refactor mirrored structure in for looks in check functions (poker)
