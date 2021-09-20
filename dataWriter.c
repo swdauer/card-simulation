@@ -7,14 +7,14 @@
 #define NUM_TRIALS 100000
 
 // two holdem hands vs eachother
-void holdemHeadsUp(int numTrials, deck d) {
+void holdemHeadsUp(unsigned long long numTrials, deck d) {
     printf(
         "hand1_0,hand1_1,h1_type,"
         "hand2_0,hand2_1,h2_type,"
         "board_0,board_1,board_2,"
         "board_3,board_4,winner\n"
     );
-    int i;
+    unsigned long long i;
     for (i = 0; i < numTrials; i++) {
         shuffle(d);
 
@@ -66,6 +66,9 @@ int main() {
     srand(time(NULL));
     deck d;
     initDeck(d);
-    holdemHeadsUp(NUM_TRIALS, d);
+
+    unsigned long long numTrials;
+    scanf("%d", &numTrials);
+    holdemHeadsUp(numTrials, d);
     return 0;
 }
