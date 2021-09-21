@@ -13,6 +13,13 @@ int compareCards(card c1, card c2) {
     return compareRanks(c1.r, c2.r);
 }
 
+card cardFromIndices(int rankIndex, int suitIndex) {
+    card c;
+    c.r = 0x1 << rankIndex;
+    c.s = 0x1 << suitIndex;
+    return c;
+}
+
 void initDeck(deck d) {
     card currCard;
     card lastCard;

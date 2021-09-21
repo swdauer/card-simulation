@@ -16,6 +16,8 @@ typedef struct {
     suit s;
 }card;
 
+card cardFromIndices(int rankIndex, int suitIndex);
+
 char rankChar(card);
 char suitChar(card);
 char rankCharFromIndex(int);
