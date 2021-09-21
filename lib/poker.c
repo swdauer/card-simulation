@@ -322,7 +322,7 @@ int compareHE(handEvaluation* e1, handEvaluation* e2) {
 
     // comparing flushes and nothings
     if (e1->handType == FLUSH || e1->handType == NOTHING) {
-        unsigned char e1CurrPosn = NUM_RANKS, e2CurrPosn = NUM_RANKS - 1;
+        unsigned char e1CurrPosn = NUM_RANKS, e2CurrPosn = NUM_RANKS;
         int count;
 
         for (count = 0; count < 5; count++) {
