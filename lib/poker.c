@@ -345,6 +345,7 @@ int compareSetsHE(handEvaluation* e1, handEvaluation* e2) {
         e2Ranks[i] = NUM_RANKS;
     }
 
+    // this won't work if number of ranks is the max value of unsigned char
     for (i = NUM_RANKS - 1; i <= NUM_RANKS - 1; i--) {
         if (e1->h.byRank[i]) {
             unsigned int e1Count = countBits(e1->h.byRank[i]);
