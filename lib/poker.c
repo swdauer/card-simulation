@@ -37,3 +37,20 @@ handEvaluation checkFlush(hand* h) {
     e.handType = NOTHING;
     return e;
 }
+
+rank straightPresent(rankSet r) {
+    rankSet mask = 0x1F << (NUM_RANKS - 5);
+    int i = NUM_RANKS - 1;
+    for (; mask >= 0x1F; mask >>= 1) {
+        if ((mask & r) == mask) return 0x1 << i;
+        i--;
+    }
+    // check for Ace to Five straight
+    mask = (0x1 << (NUM_RANKS - 1)) | 0xF;
+    if ((mask & r) == mask) return 0x8;
+    return -1;
+}
+
+// handEvaluation checkStraight(hand* h) {
+
+// }
