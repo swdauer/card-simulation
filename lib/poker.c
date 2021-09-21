@@ -42,7 +42,7 @@ void checkFlush(handEvaluation* e, hand* h) {
         if (countBits(h->bySuit[i]) >= 5) {
             e->handType = FLUSH;
             int j, count = 0;
-            for (j = NUM_RANKS - 1; j > 0 && count < 5; j--) {
+            for (j = NUM_RANKS - 1; j >= 0 && count < 5; j--) {
                 if ((h->bySuit[i]) & (0x1 << j)) {
                     addToHandRS(&(e->h), j, i);
                     count++;
