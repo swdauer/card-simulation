@@ -21,4 +21,8 @@ typedef struct {
     rank r[5];
 } handEvaluation;
 
+// handEvaluation evaluate(hand*);
+
+handEvaluation checkFlush(hand*);
+
 #endif // POKER_H
