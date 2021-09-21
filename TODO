@@ -7,4 +7,6 @@
 - finish evaluate function (poker)
 - add function to compare handEvaluations (poker)
 --------------------------------
+- finish check functions (poker)
+- finish handEval compare (poker)
 - refactor countSuitSet and countRankSet (cards)

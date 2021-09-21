@@ -24,9 +24,11 @@ typedef struct {
 // handEvaluation evaluate(hand*);
 
 handEvaluation checkFlush(hand*);
+handEvaluation checkStraight(hand*);
 
 // returns the top rank of a straight in rankSet
 // returns -1 if a straight is not present
 rank straightPresent(rankSet);
+
 
 #endif // POKER_H

@@ -20,8 +20,8 @@
 
 // only works if there are fewer than 10 cards in the hand
 handEvaluation checkFlush(hand* h) {
-    int i;
     handEvaluation e = {};
+    int i;
     for (i = 0; i < NUM_SUITS; i++) {
         if (countRankSet(h->bySuit[i]) >= 5) {
             e.handType = FLUSH;
@@ -34,7 +34,6 @@ handEvaluation checkFlush(hand* h) {
             return e;
         }
     }
-    e.handType = NOTHING;
     return e;
 }
 
@@ -51,6 +50,17 @@ rank straightPresent(rankSet r) {
     return -1;
 }
 
-// handEvaluation checkStraight(hand* h) {
+handEvaluation checkStraight(hand* h) {
+    handEvaluation e = {};
+    rankSet allRanks = 0;
+    int i;
+    for (i = 0; i < NUM_SUITS; i++)
+        allRanks |= h->bySuit[i];
 
-// }
+    rank top = straightPresent(allRanks);
+    if (top != -1) {
+        e.handType = STRAIGHT;
+        e.r[0] = top;
+    }
+    return e;
+}
