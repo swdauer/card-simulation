@@ -360,7 +360,7 @@ int compareSetsHE(handEvaluation* e1, handEvaluation* e2) {
                 else if (e1->handType == THREE_OF_A_KIND || e1->handType == PAIR) {
                     int j;
                     for (j = 1; j < 4; j++) {
-                        if (e1Ranks[j] != NUM_RANKS) {
+                        if (e1Ranks[j] == NUM_RANKS) {
                             e1Ranks[j] = i;
                             break;
                         }
@@ -382,7 +382,7 @@ int compareSetsHE(handEvaluation* e1, handEvaluation* e2) {
                 else if (e2->handType == THREE_OF_A_KIND || e2->handType == PAIR) {
                     int j;
                     for (j = 1; j < 4; j++) {
-                        if (e2Ranks[j] != NUM_RANKS) {
+                        if (e2Ranks[j] == NUM_RANKS) {
                             e2Ranks[j] = i;
                             break;
                         }
@@ -391,6 +391,15 @@ int compareSetsHE(handEvaluation* e1, handEvaluation* e2) {
             }
         }
     }
+
+    // for (i = 0; i < 4; i++) {
+    //     printf("%u ", e1Ranks[i]);
+    // }
+    // printf("\n");
+    // for (i = 0; i < 4; i++) {
+    //     printf("%u ", e2Ranks[i]);
+    // }
+    // printf("\n");
 
     for (i = 0; i < 4; i++) {
         if (e1Ranks[i] == NUM_RANKS) break;
