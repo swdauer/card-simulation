@@ -33,20 +33,28 @@ void initDeck(deck d) {
     }
 }
 
-int cardRankToIndex(card c) {
+int rankToIndex(rank r) {
     int i;
     for (i = 0; i < NUM_RANKS; i++) {
-        if (c.r == 0x1 << i)
+        if (r == 0x1 << i)
+            return i;
+    }
+}
+
+int cardRankToIndex(card c) {
+    return rankToIndex(c.r);
+}
+
+int suitToIndex(suit s) {
+    int i;
+    for (i = 0; i < NUM_SUITS; i++) {
+        if (s == 0x1 << i)
             return i;
     }
 }
 
 int cardSuitToIndex(card c) {
-    int i;
-    for (i = 0; i < NUM_SUITS; i++) {
-        if (c.s == 0x1 << i)
-            return i;
-    }
+    return suitToIndex(c.s);
 }
 
 char rankChar(card c) {
