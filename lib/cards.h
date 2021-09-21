@@ -3,18 +3,29 @@
 
 /* card type */
 #define NUM_SUITS 4
-#define LG_NUM_SUITS 2 // this should be the log base 2 of NUM_SUITS
 #define NUM_RANKS 13
 
-// These macros only work if NUM_SUITS is a power of 2
-#define SUIT(c) ((c) & (NUM_SUITS - 1)) // get last two bits from c
-#define RANK(c) ((c) >> LG_NUM_SUITS) // get c / NUM_SUITS
-#define RANK_SUIT_TO_CARD(r, s) (((r) << LG_NUM_SUITS) + (s))
+typedef int rank;
+typedef int suit;
 
-typedef unsigned char card;
+// i's start at least-significant bit
+// if the i'th bit of card.rank is on, then the card is the i'th card in the range {2, 3, 4, 5, 6, 7, 8, 9, T, J, Q, K, A}
+// if the i'th bit of card.suit is on, then the card is the i'th suit in the range {S, H, D, C}
+typedef struct {
+    rank r;
+    suit s;
+}card;
 
 char rankChar(card);
 char suitChar(card);
+char rankCharFromIndex(int);
+char suitCharFromIndex(int);
+
+// 1 if r1 is better than r2
+// -1 if r1 is worse than r2
+// 0 if r1 is equal to r2
+int compareRanks(rank r1, rank r2);
+int compareCards(card c1, card c2);
 
 void swap(card*, card*);
 
@@ -22,7 +33,6 @@ void printCard(card);
 /* end card type */
 
 /* hand type */
-typedef unsigned short cardSet;
 
 /* For byRank:
 Each card here is a single bit.
@@ -42,14 +52,15 @@ bySuit[0] == 0x8 then the hand contains the 5 of spades and no other spades
 bySuit[0] == 0x9 then the hand contains the 2 and 5 of spades and no other spades
 */
 typedef struct {
-    cardSet byRank[NUM_RANKS];
-    cardSet bySuit[NUM_SUITS];
+    suit byRank[NUM_RANKS];
+    rank bySuit[NUM_SUITS];
 } hand;
 
 void printHand(hand*);
 
-void addToHandRS(hand*, unsigned char rank, unsigned char suit);
 void addToHand(hand*, card);
+
+void zeroHand(hand*);
 /* end hand type */
 
 /* deck type */
@@ -62,7 +73,7 @@ void initDeck(deck);
 void shuffleMtoN(deck, char m, char n);
 void shuffle(deck);
 
-void printMtoN(deck, char m, char n);
+void printDeckMtoN(deck, char m, char n);
 void printDeck(deck);
 /* end deck type */
 

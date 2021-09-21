@@ -1,23 +1,64 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "cards.h"
 
+int compareRanks(rank r1, rank r2) {
+    if (r1 > r2) return 1;
+    else if (r1 < r2) return -1;
+    else return 0;
+}
+
+int compareCards(card c1, card c2) {
+    return compareRanks(c1.r, c2.r);
+}
+
 void initDeck(deck d) {
-    char i;
-    for (i = 0; i < DECK_SIZE; i++) {
-        d[i] = i;
+    card currCard;
+    card lastCard;
+    lastCard.r = 0x1 << (NUM_RANKS - 1);
+    lastCard.s = 0x1 << (NUM_SUITS - 1);
+    int i = 0;
+    for (currCard.r = 0x1; currCard.r <= lastCard.r; currCard.r <<= 1) {
+        for (currCard.s = 0x1; currCard.s <= lastCard.s; currCard.s <<= 1) {
+            memcpy(d + i++, &currCard, sizeof(card));
+        }
+    }
+}
+
+int cardRankToIndex(card c) {
+    int i;
+    for (i = 0; i < NUM_RANKS; i++) {
+        if (c.r == 0x1 << i)
+            return i;
+    }
+}
+
+int cardSuitToIndex(card c) {
+    int i;
+    for (i = 0; i < NUM_SUITS; i++) {
+        if (c.s == 0x1 << i)
+            return i;
     }
 }
 
 char rankChar(card c) {
+    return rankCharFromIndex(cardRankToIndex(c));
+}
+
+char rankCharFromIndex(int i) {
     static char ranks[] = { '2', '3', '4', '5', '6', '7', '8',
                             '9', 'T', 'J', 'Q', 'K', 'A' };
-    return ranks[RANK(c)];
+    return ranks[i];
 }
 
 char suitChar(card c) {
+    return suitCharFromIndex(cardSuitToIndex(c));
+}
+
+char suitCharFromIndex(int i) {
     static char suits[] = { 'S', 'H', 'D', 'C' };
-    return suits[SUIT(c)];
+    return suits[i];
 }
 
 void swap(card* x, card* y) {
@@ -42,7 +83,7 @@ void printCard(card c) {
     printf("%c%c", rankChar(c), suitChar(c));
 }
 
-void printMtoN(deck d, char m, char n) {
+void printDeckMtoN(deck d, char m, char n) {
     char printed1 = 0;
     for (; m <= n; m++) {
         if (printed1) printf(",");
@@ -53,32 +94,32 @@ void printMtoN(deck d, char m, char n) {
 }
 
 void printDeck(deck d) {
-    printMtoN(d, 0, DECK_SIZE - 1);
+    printDeckMtoN(d, 0, DECK_SIZE - 1);
 }
 
-void addToHandRS(hand* h, unsigned char rank, unsigned char suit) {
-    h->byRank[rank] |= 0x1 << suit;
-    h->bySuit[suit] |= 0x1 << rank;
+void zeroHand(hand* h) {
+    memset(h, 0, sizeof(hand));
 }
 
 void addToHand(hand* h, card c) {
-    addToHandRS(h, RANK(c), SUIT(c));
+    h->byRank[cardRankToIndex(c)] |= c.s;
+    h->bySuit[cardSuitToIndex(c)] |= c.r;
 }
 
 void printHand(hand* h) {
     int i;
-    char printed1 = 0;
+    char printedOne = 0;
     for (i = 0; i < NUM_RANKS; i++) {
-        if (h->byRank[i]) {
-            int j;
-            for (j = 0; j < NUM_SUITS; j++) {
-                if (h->byRank[i] & (0x1 << j)) {
-                    if (printed1) printf(",");
-                    printCard(RANK_SUIT_TO_CARD(i, j));
-                    printed1 = 1;
-                }
+        card curr;
+        curr.r = 0x1 << i;
+        int j;
+        for (j = 0; j < NUM_SUITS; j++) {
+            curr.s = 0x1 << j;
+            if (h->byRank[i] & curr.s) {
+                if (printedOne) putchar(',');
+                printCard(curr);
+                printedOne = 1;
             }
         }
     }
-    // if (printed1) printf("\n");
 }
