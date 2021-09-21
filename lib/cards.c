@@ -123,3 +123,19 @@ void printHand(hand* h) {
         }
     }
 }
+
+int countSuitSet(suitSet s) {
+    int i, count = 0;
+    for (i = 0; i < NUM_SUITS; i++) {
+        if (s & (0x1 << i)) count++;
+    }
+    return count;
+}
+
+int countRankSet(rankSet r) {
+    int i, count = 0;
+    for (i = 0; i < NUM_RANKS; i++) {
+        if (r & (0x1 << i)) count++;
+    }
+    return count;
+}

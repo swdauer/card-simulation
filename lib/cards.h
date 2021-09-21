@@ -54,6 +54,9 @@ bySuit[0] == 0x9 then the hand contains the 2 and 5 of spades and no other spade
 typedef suit suitSet;
 typedef rank rankSet;
 
+int countRankSet(rankSet);
+int countSuitSet(suitSet);
+
 typedef struct {
     suitSet byRank[NUM_RANKS];
     rankSet bySuit[NUM_SUITS];
