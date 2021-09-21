@@ -51,9 +51,12 @@ E.G. bySuit[0] == 0x1 then the hand contains the 2 of spades and no other spades
 bySuit[0] == 0x8 then the hand contains the 5 of spades and no other spades
 bySuit[0] == 0x9 then the hand contains the 2 and 5 of spades and no other spades
 */
+typedef suit suitSet;
+typedef rank rankSet;
+
 typedef struct {
-    suit byRank[NUM_RANKS];
-    rank bySuit[NUM_SUITS];
+    suitSet byRank[NUM_RANKS];
+    rankSet bySuit[NUM_SUITS];
 } hand;
 
 void printHand(hand*);
