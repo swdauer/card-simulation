@@ -4,8 +4,6 @@
 #include "lib/cards.h"
 #include "lib/poker.h"
 
-#define NUM_TRIALS 100000
-
 // two holdem hands vs eachother
 void holdemHeadsUp(unsigned long long numTrials, deck d) {
     printf(
@@ -46,11 +44,11 @@ void holdemHeadsUp(unsigned long long numTrials, deck d) {
 
         printHand(&h1Hole);
         putchar(',');
-        printHandEval(&e1);
+        printHandType(e1.handType);
         putchar(',');
         printHand(&h2Hole);
         putchar(',');
-        printHandEval(&e2);
+        printHandType(e2.handType);
         putchar(',');
         printHand(&board);
         putchar(',');
