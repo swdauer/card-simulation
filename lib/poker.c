@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "cards.h"
 #include "poker.h"
 
@@ -80,5 +81,55 @@ handEvaluation checkStraightFlush(hand* h) {
 }
 
 handEvaluation checkSet(hand* h) {
+    handEvaluation e = {};
+    rank top5[5] = {};
+    int top5Counts[5] = {};
 
+    int i;
+    for (i = NUM_RANKS - 1; i >= 0; i--) {
+        int count = countSuitSet(h->byRank[i]);
+        int j;
+        for (j = 4; j >= 0 && count > top5Counts[j]; j--) {
+            if (j < 4) {
+                top5Counts[j + 1] = top5Counts[j];
+                e.r[j + 1] = e.r[j];
+            }
+            top5Counts[j] = count;
+            e.r[j] = 0x1 << i;
+        }
+    }
+
+    if (top5Counts[0] == 4) { // four of a kind
+        e.handType = FOUR_OF_A_KIND;
+        e.r[2] = 0;
+        e.r[3] = 0;
+        e.r[4] = 0;
+    } else if (top5Counts[0] == 3 && top5Counts[1] >= 2) { // full house
+        e.handType = FULL_HOUSE;
+        e.r[2] = 0;
+        e.r[3] = 0;
+        e.r[4] = 0;
+    } else if (top5Counts[0] == 3) { // three of a kind
+        e.handType = THREE_OF_A_KIND;
+        e.r[3] = 0;
+        e.r[4] = 0;
+    } else if (top5Counts[0] == 2 && top5Counts[1] == 2) {
+        e.handType = TWO_PAIR;
+        e.r[3] = 0;
+        e.r[4] = 0;
+    } else if (top5Counts[0] == 2) {
+        e.handType = PAIR;
+        e.r[4] = 0;
+    }
+    return e;
+}
+
+void printHandType(int ht) {
+    static char* hts[] = {
+        "nothing","pair","two pair",
+        "three of a kind","straight",
+        "flush","full house","four of a kind",
+        "straight flush"
+    };
+    printf("%s", hts[ht]);
 }

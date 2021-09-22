@@ -28,6 +28,8 @@ handEvaluation checkStraight(hand*);
 handEvaluation checkStraightFlush(hand*);
 handEvaluation checkSet(hand*);
 
+void printHandType(int);
+
 // returns the top rank of a straight in rankSet
 // returns -1 if a straight is not present
 rank straightPresent(rankSet);
