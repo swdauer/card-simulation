@@ -6,7 +6,9 @@
 - remove newlines from print functions
 - finish evaluate function (poker)
 - add function to compare handEvaluations (poker)
---------------------------------
 - finish check functions (poker)
 - finish handEval compare (poker)
+--------------------------------
 - refactor countSuitSet and countRankSet (cards)
+- reorder ranks in rankSet
+- make function to replace (0x1 << i)
