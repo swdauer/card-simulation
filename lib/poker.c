@@ -64,3 +64,21 @@ handEvaluation checkStraight(hand* h) {
     }
     return e;
 }
+
+handEvaluation checkStraightFlush(hand* h) {
+    handEvaluation e = {};
+    int i;
+    for (i = 0; i < NUM_SUITS; i++) {
+        rank top = straightPresent(h->bySuit[i]);
+        if (top != -1) {
+            e.handType = STRAIGHT_FLUSH;
+            e.r[0] = top;
+            return e;
+        }
+    }
+    return e;
+}
+
+handEvaluation checkSet(hand* h) {
+
+}
