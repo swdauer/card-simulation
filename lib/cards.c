@@ -39,6 +39,7 @@ int rankToIndex(rank r) {
         if (r == 0x1 << i)
             return i;
     }
+    return -1;
 }
 
 int cardRankToIndex(card c) {
@@ -51,6 +52,7 @@ int suitToIndex(suit s) {
         if (s == 0x1 << i)
             return i;
     }
+    return -1;
 }
 
 int cardSuitToIndex(card c) {
