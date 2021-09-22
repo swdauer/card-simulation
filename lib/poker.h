@@ -28,6 +28,11 @@ handEvaluation checkStraight(hand*);
 handEvaluation checkStraightFlush(hand*);
 handEvaluation checkSet(hand*);
 
+// return 1 if e1 is better than e2
+// return -1 if e1 is worse than e2
+// return 0 if e1 and e2 tie
+int compareHE(handEvaluation* e1, handEvaluation* e2);
+
 void printHandType(int);
 
 // returns the top rank of a straight in rankSet

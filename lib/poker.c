@@ -133,3 +133,15 @@ void printHandType(int ht) {
     };
     printf("%s", hts[ht]);
 }
+
+int compareHE(handEvaluation* e1, handEvaluation* e2) {
+    if (e1->handType > e2->handType) return 1;
+    else if (e1->handType < e2->handType) return -1;
+
+    int i;
+    for (i = 0; i < 4 && e1->r[i]; i++) {
+        if (compareRanks(e1->r[i], e2->r[i]))
+            return compareRanks(e1->r[i], e2->r[i]);
+    }
+    return 0;
+}
