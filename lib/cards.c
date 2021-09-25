@@ -126,7 +126,7 @@ void addToHand(hand* h, card c) {
 void printHand(hand* h) {
     int i;
     char printedOne = 0;
-    for (i = 0; i < NUM_RANKS; i++) {
+    for (i = NUM_RANKS - 1; i >= 0; i--) {
         card curr;
         curr.r = 0x1 << i;
         int j;
