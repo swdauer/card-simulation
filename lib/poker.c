@@ -25,12 +25,15 @@ handEvaluation checkFlush(hand* h) {
     int i;
     for (i = 0; i < NUM_SUITS; i++) {
         if (countRankSet(h->bySuit[i]) >= 5) {
+            rankSet flushRanks = h->bySuit[i];
             e.handType = FLUSH;
-            int j, count = 0;
-            for (j = NUM_RANKS - 1; j >= 0 && count < 5; j--) {
-                if (h->bySuit[i] & (0x1 << j)) {
-                    e.r[count++] = 0x1 << j;
-                }
+            int count;
+            for (count = 0; count < 5; count++) { // CHANGE HERE
+                e.r[count] = LEAST_SIG_BIT(flushRanks);
+                flushRanks = REMOVE_LEAST_SIG_BIT(flushRanks);
+                // if (h->bySuit[i] & (0x1 << j)) {
+                //     e.r[count++] = 0x1 << j;
+                // }
             }
             return e;
         }
@@ -41,12 +44,12 @@ handEvaluation checkFlush(hand* h) {
 rank straightPresent(rankSet r) {
     rankSet mask = 0x1F << (NUM_RANKS - 5);
     int i = NUM_RANKS - 1;
-    for (; mask >= 0x1F; mask >>= 1) {
+    for (; mask >= 0x1F; mask >>= 1) { // CHANGE HERE
         if ((mask & r) == mask) return 0x1 << i;
         i--;
     }
     // check for Ace to Five straight
-    mask = (0x1 << (NUM_RANKS - 1)) | 0xF;
+    mask = (0x1 << (NUM_RANKS - 1)) | 0xF; // CHANGE HERE
     if ((mask & r) == mask) return 0x8;
     return -1;
 }
@@ -66,6 +69,7 @@ handEvaluation checkStraight(hand* h) {
     return e;
 }
 
+// only works if hand size is less than 10
 handEvaluation checkStraightFlush(hand* h) {
     handEvaluation e = {};
     int i;
@@ -86,7 +90,7 @@ handEvaluation checkSet(hand* h) {
     int top5Counts[5] = {};
 
     int i;
-    for (i = NUM_RANKS - 1; i >= 0; i--) {
+    for (i = NUM_RANKS - 1; i >= 0; i--) { // CHANGE HERE
         int count = countSuitSet(h->byRank[i]);
         int j;
         for (j = 4; j >= 0 && count > top5Counts[j]; j--) {
