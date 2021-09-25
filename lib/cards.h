@@ -21,6 +21,8 @@ int suitToIndex(suit);
 int cardSuitToIndex(card);
 int cardRankToIndex(card);
 
+#define INDEX_TO_RANK_OR_SUIT(x) (0x1 << (x))
+
 card cardFromIndices(int rankIndex, int suitIndex);
 
 char rankChar(card);
