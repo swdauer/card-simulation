@@ -9,6 +9,7 @@
 - finish check functions (poker)
 - finish handEval compare (poker)
 - reorder ranks in rankSet (cards)
---------------------------------
 - correct usage of ranks order in poker (poker)
 - make function to replace (0x1 << i)
+--------------------------------
+- correct check sets to properly get best 5 cards (poker)
