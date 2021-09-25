@@ -81,45 +81,85 @@ handEvaluation checkStraightFlush(hand* h) {
 
 handEvaluation checkSet(hand* h) {
     handEvaluation e = {};
-    rank top5[5] = {};
-    int top5Counts[5] = {};
+
+    typedef struct rankList {
+        int count;
+        rank r;
+        struct rankList* byCount;
+        struct rankList* byRank;
+    } rankList;
+
+    rankList allocSpace[NUM_RANKS] = {};
+    rankList* byCountHead = NULL;
+    rankList* byRankHead = NULL;
+    rankList* byRankTail = NULL;
 
     int i;
     for (i = 0; i < NUM_RANKS; i++) { // CHANGE HERE
         int count = countSuitSet(h->byRank[i]);
-        int j;
-        for (j = 4; j >= 0 && count > top5Counts[j]; j--) {
-            if (j < 4) {
-                top5Counts[j + 1] = top5Counts[j];
-                e.r[j + 1] = e.r[j];
+        if (count) {
+            allocSpace[i].count = count;
+            allocSpace[i].r = INDEX_TO_RANK_OR_SUIT(i);
+            if (byCountHead) { // there is already one element in both byCountHead and byRankHead lists
+                // count is bigger than all counts in the byCountHead list
+                if (count > byCountHead->count) {
+                    allocSpace[i].byCount = byCountHead;
+                    byCountHead = &allocSpace[i];
+                } else {
+                    rankList* prev = byCountHead;
+                    rankList* curr = byCountHead->byCount;
+                    while (curr != NULL && curr->count >= count) {
+                        prev = prev->byCount;
+                        curr = curr->byCount;
+                    }
+                    prev->byCount = &allocSpace[i];
+                    allocSpace[i].byCount = curr;
+                }
+                byRankTail->byRank = &allocSpace[i];
+                byRankTail = &allocSpace[i];
+            } else {
+                byCountHead = &allocSpace[i];
+                byRankHead = &allocSpace[i];
+                byRankTail = &allocSpace[i];
             }
-            top5Counts[j] = count;
-            e.r[j] = INDEX_TO_RANK_OR_SUIT(i);
         }
     }
 
-    if (top5Counts[0] == 4) { // four of a kind
-        e.handType = FOUR_OF_A_KIND;
-        e.r[2] = 0;
-        e.r[3] = 0;
-        e.r[4] = 0;
-    } else if (top5Counts[0] == 3 && top5Counts[1] >= 2) { // full house
-        e.handType = FULL_HOUSE;
-        e.r[2] = 0;
-        e.r[3] = 0;
-        e.r[4] = 0;
-    } else if (top5Counts[0] == 3) { // three of a kind
-        e.handType = THREE_OF_A_KIND;
-        e.r[3] = 0;
-        e.r[4] = 0;
-    } else if (top5Counts[0] == 2 && top5Counts[1] == 2) {
-        e.handType = TWO_PAIR;
-        e.r[3] = 0;
-        e.r[4] = 0;
-    } else if (top5Counts[0] == 2) {
-        e.handType = PAIR;
-        e.r[4] = 0;
-    }
+    // rankList* curr = byRankHead;
+    // while (curr != NULL) {
+    //     printf("%c %d,", rankCharFromIndex(rankToIndex(curr->r)), curr->count);
+    //     curr = curr->byRank;
+    // }
+    // printf("\n");
+    // curr = byCountHead;
+    // while (curr != NULL) {
+    //     printf("%c %d,", rankCharFromIndex(rankToIndex(curr->r)), curr->count);
+    //     curr = curr->byCount;
+    // }
+    // printf("\n");
+
+    // if (top5Counts[0] == 4) { // four of a kind
+    //     e.handType = FOUR_OF_A_KIND;
+    //     e.r[2] = 0;
+    //     e.r[3] = 0;
+    //     e.r[4] = 0;
+    // } else if (top5Counts[0] == 3 && top5Counts[1] >= 2) { // full house
+    //     e.handType = FULL_HOUSE;
+    //     e.r[2] = 0;
+    //     e.r[3] = 0;
+    //     e.r[4] = 0;
+    // } else if (top5Counts[0] == 3) { // three of a kind
+    //     e.handType = THREE_OF_A_KIND;
+    //     e.r[3] = 0;
+    //     e.r[4] = 0;
+    // } else if (top5Counts[0] == 2 && top5Counts[1] == 2) {
+    //     e.handType = TWO_PAIR;
+    //     e.r[3] = 0;
+    //     e.r[4] = 0;
+    // } else if (top5Counts[0] == 2) {
+    //     e.handType = PAIR;
+    //     e.r[4] = 0;
+    // }
     return e;
 }
 
