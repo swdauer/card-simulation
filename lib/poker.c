@@ -31,9 +31,6 @@ handEvaluation checkFlush(hand* h) {
             for (count = 0; count < 5; count++) { // CHANGE HERE
                 e.r[count] = LEAST_SIG_BIT(flushRanks);
                 flushRanks = REMOVE_LEAST_SIG_BIT(flushRanks);
-                // if (h->bySuit[i] & (0x1 << j)) {
-                //     e.r[count++] = 0x1 << j;
-                // }
             }
             return e;
         }
@@ -43,14 +40,12 @@ handEvaluation checkFlush(hand* h) {
 
 rank straightPresent(rankSet r) {
     rankSet mask = 0x1F << (NUM_RANKS - 5);
-    int i = NUM_RANKS - 1;
-    for (; mask >= 0x1F; mask >>= 1) { // CHANGE HERE
-        if ((mask & r) == mask) return 0x1 << i;
-        i--;
+    for (mask = 0x1F; mask <= (0x1F << (NUM_RANKS - 5)); mask <<= 1) { // CHANGE HERE
+        if ((mask & r) == mask) return LEAST_SIG_BIT(mask);
     }
     // check for Ace to Five straight
-    mask = (0x1 << (NUM_RANKS - 1)) | 0xF; // CHANGE HERE
-    if ((mask & r) == mask) return 0x8;
+    mask = (0xF << (NUM_RANKS - 4)) | 0x1; // CHANGE HERE
+    if ((mask & r) == mask) return 0x1 << (NUM_RANKS - 4);
     return -1;
 }
 
