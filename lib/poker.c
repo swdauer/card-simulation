@@ -85,7 +85,7 @@ handEvaluation checkSet(hand* h) {
     int top5Counts[5] = {};
 
     int i;
-    for (i = NUM_RANKS - 1; i >= 0; i--) { // CHANGE HERE
+    for (i = 0; i < NUM_RANKS; i++) { // CHANGE HERE
         int count = countSuitSet(h->byRank[i]);
         int j;
         for (j = 4; j >= 0 && count > top5Counts[j]; j--) {
@@ -94,7 +94,7 @@ handEvaluation checkSet(hand* h) {
                 e.r[j + 1] = e.r[j];
             }
             top5Counts[j] = count;
-            e.r[j] = 0x1 << i;
+            e.r[j] = INDEX_TO_RANK_OR_SUIT(i);
         }
     }
 
