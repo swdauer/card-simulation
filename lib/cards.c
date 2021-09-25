@@ -4,8 +4,8 @@
 #include "cards.h"
 
 int compareRanks(rank r1, rank r2) {
-    if (r1 > r2) return 1;
-    else if (r1 < r2) return -1;
+    if (r1 < r2) return 1;
+    else if (r1 > r2) return -1;
     else return 0;
 }
 
@@ -64,8 +64,8 @@ char rankChar(card c) {
 }
 
 char rankCharFromIndex(int i) {
-    static char ranks[] = { '2', '3', '4', '5', '6', '7', '8',
-                            '9', 'T', 'J', 'Q', 'K', 'A' };
+    static char ranks[] = { 'A', 'K', 'Q', 'J', 'T', '9', '8',
+                            '7', '6', '5', '4', '3', '2' };
     return ranks[i];
 }
 
@@ -155,4 +155,8 @@ int countRankSet(rankSet r) {
         if (r & (0x1 << i)) count++;
     }
     return count;
+}
+
+rank highestRank(rankSet r) {
+
 }

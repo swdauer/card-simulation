@@ -61,6 +61,10 @@ bySuit[0] == 0x9 then the hand contains the 2 and 5 of spades and no other spade
 typedef suit suitSet;
 typedef rank rankSet;
 
+// use this to find the highest rank in a rank set
+#define LEAST_SIG_BIT(x) ((x) & (-(x)))
+#define REMOVE_LEAST_SIG_BIT(x) ((x) & (~LEAST_SIG_BIT((x))))
+
 int countRankSet(rankSet);
 int countSuitSet(suitSet);
 
