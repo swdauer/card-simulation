@@ -13,6 +13,8 @@ The root folder contains the simulations themselves.
 
 ### cards
 
+**this section is outdated**
+
 For a standard 52 card deck
 
 - Deck will be a data type containing each of the cards
