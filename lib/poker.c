@@ -28,7 +28,7 @@ handEvaluation checkFlush(hand* h) {
             rankSet flushRanks = h->bySuit[i];
             e.handType = FLUSH;
             int count;
-            for (count = 0; count < 5; count++) { // CHANGE HERE
+            for (count = 0; count < 5; count++) {
                 e.r[count] = LEAST_SIG_BIT(flushRanks);
                 flushRanks = REMOVE_LEAST_SIG_BIT(flushRanks);
             }
@@ -40,11 +40,11 @@ handEvaluation checkFlush(hand* h) {
 
 rank straightPresent(rankSet r) {
     rankSet mask = 0x1F << (NUM_RANKS - 5);
-    for (mask = 0x1F; mask <= (0x1F << (NUM_RANKS - 5)); mask <<= 1) { // CHANGE HERE
+    for (mask = 0x1F; mask <= (0x1F << (NUM_RANKS - 5)); mask <<= 1) {
         if ((mask & r) == mask) return LEAST_SIG_BIT(mask);
     }
     // check for Ace to Five straight
-    mask = (0xF << (NUM_RANKS - 4)) | 0x1; // CHANGE HERE
+    mask = (0xF << (NUM_RANKS - 4)) | 0x1;
     if ((mask & r) == mask) return 0x1 << (NUM_RANKS - 4);
     return -1;
 }
@@ -95,7 +95,7 @@ handEvaluation checkSet(hand* h) {
     rankList* byRankTail = NULL;
 
     int i;
-    for (i = 0; i < NUM_RANKS; i++) { // CHANGE HERE
+    for (i = 0; i < NUM_RANKS; i++) {
         int count = countSuitSet(h->byRank[i]);
         if (count) {
             allocSpace[i].count = count;
@@ -138,28 +138,47 @@ handEvaluation checkSet(hand* h) {
     // }
     // printf("\n");
 
-    // if (top5Counts[0] == 4) { // four of a kind
-    //     e.handType = FOUR_OF_A_KIND;
-    //     e.r[2] = 0;
-    //     e.r[3] = 0;
-    //     e.r[4] = 0;
-    // } else if (top5Counts[0] == 3 && top5Counts[1] >= 2) { // full house
-    //     e.handType = FULL_HOUSE;
-    //     e.r[2] = 0;
-    //     e.r[3] = 0;
-    //     e.r[4] = 0;
-    // } else if (top5Counts[0] == 3) { // three of a kind
-    //     e.handType = THREE_OF_A_KIND;
-    //     e.r[3] = 0;
-    //     e.r[4] = 0;
-    // } else if (top5Counts[0] == 2 && top5Counts[1] == 2) {
-    //     e.handType = TWO_PAIR;
-    //     e.r[3] = 0;
-    //     e.r[4] = 0;
-    // } else if (top5Counts[0] == 2) {
-    //     e.handType = PAIR;
-    //     e.r[4] = 0;
-    // }
+    if (byCountHead->count == 4) { // four of a kind
+        e.handType = FOUR_OF_A_KIND;
+        e.r[0] = byCountHead->r;
+        if (byRankHead->r != e.r[0]) e.r[1] = byRankHead->r;
+        else e.r[1] = byRankHead->byRank->r;
+    } else if (byCountHead->count == 3 && byCountHead->byCount->count >= 2) { // full house
+        e.handType = FULL_HOUSE;
+        e.r[0] = byCountHead->r;
+        rankList* curr = byRankHead;
+        // this while sets curr to the highest rank != e.r[0] and whose count is >= 2
+        while (curr->r == e.r[0] || curr->count < 2) curr = curr->byRank;
+        e.r[1] = curr->r;
+    } else if (byCountHead->count == 3) { // three of a kind
+        e.handType = THREE_OF_A_KIND;
+        e.r[0] = byCountHead->r;
+        e.r[1] = byCountHead->byCount->r;
+        e.r[2] = byCountHead->byCount->byCount->r;
+    } else if (byCountHead->count == 2 && byCountHead->byCount->count == 2) { // two pair
+        e.handType = TWO_PAIR;
+        e.r[0] = byCountHead->r;
+        e.r[1] = byCountHead->byCount->r;
+        rankList* curr = byRankHead;
+        // this while sets curr to the highest rank != e.r[0] and != e.r[1]
+        while (curr->r == e.r[0] || curr->r == e.r[1]) curr = curr->byRank;
+        e.r[2] = curr->r;
+    } else if (byCountHead->count == 2) { // pair
+        e.handType = PAIR;
+        e.r[0] = byCountHead->r;
+        rankList* curr = byCountHead->byCount;
+        for (i = 1; i <= 3; i++) {
+            e.r[i] = curr->r;
+            curr = curr->byCount;
+        }
+    } else { // nothing
+        e.handType = NOTHING;
+        rankList* curr = byRankHead;
+        for (i = 0; i < 5; i++) {
+            e.r[i] = curr->r;
+            curr = curr->byRank;
+        }
+    }
     return e;
 }
 
