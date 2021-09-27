@@ -12,6 +12,6 @@
 - correct usage of ranks order in poker (poker)
 - make function to replace (0x1 << i)
 - correct check sets to properly get best 5 cards (poker)
---------------------------------
 - outline document tag model for github pages
 - figure out sections of white paper for this repo
+--------------------------------
