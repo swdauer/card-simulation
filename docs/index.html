@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta charset="utf-8" />
     <title>Card Simulation</title>
 </head>
 
@@ -43,7 +44,7 @@
                     </header>
                     <ul>
                         <li>Determine the rank and suit of the card</li>
-                        <li>Rank and suit need to have an equivalence operator. In other words I need to be able to
+                        <li>Ranks and suits need to have an equivalence operator. In other words I need to be able to
                             determine if two ranks are equal. The same is true for suits.</li>
                         <li>Ranks also need to have an order, which means I can determine if one rank is less than
                             another</li>
@@ -53,16 +54,53 @@
                     <header>
                         <h4>Deck Type Requirements</h4>
                     </header>
-                    <p>For the deck type I need to be able to deal cards out of the deck into hands.</p>
+                    <ul>
+                        <li>Deal cards from the deck into hands</li>
+                        <li>Shuffle the deck</li>
+                        <li>View cards in the deck</li>
+                    </ul>
                 </section>
                 <section id="handTypeRequirements">
                     <header>
                         <h4>Hand Type Requirements</h4>
                     </header>
-                    <p>
-                        For the hand type I need to be able to access the cards present in the hand.
-                    </p>
+                    <ul>
+                        <li>Compose cards dealt from a deck into a hand</li>
+                        <li>View cards in the hand</li>
+                        <li>Order hands or determine if one hand is better than another</li>
+                    </ul>
                 </section>
+            </section>
+            <section id="startOfImplementation">
+                <header>
+                    <h3>Start of Implementation</h3>
+                </header>
+                <p>
+                    For the card type I can group together a rank and a suit using a class or structure. Then
+                    determining the rank and suit is as simple as accessing the rank and suit of a card. Since both rank
+                    and suit need to have an equivalence operator it would be beneficial for me to use a type which is
+                    quickly comparable such as an integer. Using an integer would also allow ranks to be easily ordered
+                    as integers already have a less than operator.
+                </p>
+                <p>
+                    For the deck type I can create an array of card types. This allows quick access and dealing with an
+                    array index. Shuffling is also easy with an array as each element can be easily accessed and
+                    swapped.
+                </p>
+                <p>
+                    On the surface, the hand type seems easy to implement as an array of card types just like the deck.
+                    This would allow quick access of each card in the hand using array access. Likewise cards could be
+                    easily added to the hand by just filling an empty slot in the hands containing array. There is,
+                    however, still the operation of comparing hands to think about. This operation should be analyzed in
+                    order to determine if the array representation of the hand type is a good solution, and so the next
+                    sections will be mainly concerned with this analysis.
+                </p>
+            </section>
+            <section id="howToCompareHands">
+                <header>
+                    <h3>How to Compare Hands</h3>
+                </header>
+                <p></p>
             </section>
         </main>
     </article>
