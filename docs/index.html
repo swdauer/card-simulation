@@ -8,26 +8,54 @@
 <body>
     <article>
         <header>
-            <h1>Card Simulation</h1>
-            <h4>An Excursion in Data Generation for Card Games</h4>
+            <h1 id="paperTitle">Card Simulation</h1>
+            <h4 id="paperSubtitle">An Excursion in Data Generation for Card Games</h4>
         </header>
         <main>
-            <section>
+            <section id="theQuestion">
                 <header>
                     <h3>The Question</h3>
                 </header>
                 <p>
                     The goal of this repo is to generate data I can analyze to improve my strategies in card games.
                     Specifically my main interest is Texas Hold'em. The more data I can generate the better, and so
-                    optimizing the runtime of the simulator is of upmost importance. Then the root question is <b>How
-                        can I generate data quickly?</b> Over the course of this paper I will attempt to outline my
+                    optimizing the runtime of the simulator is of upmost importance. Then the root question is
+                    <strong>How
+                        can I generate data quickly?</strong> Over the course of this paper I will attempt to outline my
                     solution to this question as it relates to Texas Hold'em.
                 </p>
             </section>
-            <section>
+            <section id="whatIsRequired">
                 <header>
                     <h3>What is required?</h3>
                 </header>
+                <p>
+                    My chosen representation of objects in the simulator is to have:
+                <ul>
+                    <li>a card type</li>
+                    <li>a hand type which is a collection of cards</li>
+                    <li>a deck type which is a collection of cards</li>
+                </ul>
+                </p>
+                <section id="cardTypeRequirements">
+                    <header>
+                        <h4>card Type Requirements</h4>
+                    </header>
+                    <p>
+                        For card type I need to be able to determine the rank and suit of the card. Both the rank and
+                        suit need to have an equivalence operator. In other words I need to be able to tell if two ranks
+                        are equivalent. The same goes for suits. For ranks I also need to be able to determine their
+                        order, which means that I can determine if one rank is less than another.
+                    </p>
+                </section>
+                <section id="handTypeRequirements">
+                    <header>
+                        <h4>hand Type Requirements</h4>
+                    </header>
+                    <p>
+                        For hand type I need to be able to access the cards present in the hand.
+                    </p>
+                </section>
             </section>
         </main>
     </article>
