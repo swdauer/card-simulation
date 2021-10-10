@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Card Simulation</title>
+</head>
+
+<body>
+    <article>
+        <header>
+            <h1 id="paperTitle">Card Simulation</h1>
+            <h3 id="paperSubtitle">An Excursion in Data Generation for Card Games</h3>
+        </header>
+        <main>
+            <section id="theQuestion">
+                <header>
+                    <h2>The Question</h2>
+                </header>
+                <p>
+                    The goal of this repo is to generate data I can analyze to improve my strategies in card games.
+                    Specifically my main interest is Texas Hold'em. The more data I can generate the better, and so
+                    optimizing the runtime of the simulator is of upmost importance. Then the root question is
+                    <strong>How can I generate data quickly?</strong> Over the course of this paper I will attempt to
+                    outline my solution to this question as it relates to Texas Hold'em.
+                </p>
+            </section>
+            <section id="whatIsRequired">
+                <header>
+                    <h2>What is required?</h2>
+                </header>
+                <p>
+                    My chosen representation of objects in the simulator is to have:
+                <ul>
+                    <li>a card type</li>
+                    <li>a hand type which is a collection of cards</li>
+                    <li>a deck type which is a collection of cards</li>
+                </ul>
+                </p>
+                <section id="cardTypeRequirements">
+                    <header>
+                        <h3>Card Type Requirements</h3>
+                    </header>
+                    <ul>
+                        <li>Determine the rank and suit of the card</li>
+                        <li>Ranks and suits need to have an equivalence operator. In other words I need to be able to
+                            determine if two ranks are equal. The same is true for suits.</li>
+                        <li>Ranks also need to have an order, which means I can determine if one rank is less than
+                            another</li>
+                    </ul>
+                </section>
+                <section id="deckTypeRequirements">
+                    <header>
+                        <h3>Deck Type Requirements</h3>
+                    </header>
+                    <ul>
+                        <li>Deal cards from the deck into hands</li>
+                        <li>Shuffle the deck</li>
+                        <li>View cards in the deck</li>
+                    </ul>
+                </section>
+                <section id="handTypeRequirements">
+                    <header>
+                        <h3>Hand Type Requirements</h3>
+                    </header>
+                    <ul>
+                        <li>Compose cards dealt from a deck into a hand</li>
+                        <li>View cards in the hand</li>
+                        <li>Order hands or determine if one hand is better than another</li>
+                    </ul>
+                </section>
+            </section>
+            <section id="startOfImplementation">
+                <header>
+                    <h2>Start of Implementation</h2>
+                </header>
+                <p>
+                    For the card type I can group together a rank and a suit using a class or structure. Then
+                    determining the rank and suit is as simple as accessing the rank and suit of a card. Since both rank
+                    and suit need to have an equivalence operator it would be beneficial for me to use a type which is
+                    quickly comparable such as an integer. Using an integer would also allow ranks to be easily ordered
+                    as integers already have a less than operator.
+                </p>
+                <p>
+                    For the deck type I can create an array of card types. This allows quick access and dealing with an
+                    array index. Shuffling is also easy with an array as each element can be easily accessed and
+                    swapped.
+                </p>
+                <p>
+                    On the surface, the hand type seems easy to implement as an array of card types just like the deck.
+                    This would allow quick access of each card in the hand using array access. Likewise cards could be
+                    easily added to the hand by just filling an empty slot in the hands containing array. There is,
+                    however, still the operation of comparing hands to think about. This operation should be analyzed in
+                    order to determine if the array representation of the hand type is a good solution, and so the next
+                    sections will be mainly concerned with this analysis.
+                </p>
+            </section>
+            <section id="howToCompareHands">
+                <header>
+                    <h2>How to Compare Hands</h2>
+                </header>
+                <p>
+                    Comparing hands is a two phase problem. First I need to determine the best five card hand e.g.
+                    flush, straight, three-of-a-kind. Second I need to compare the best five card hand of each larger
+                    hand I'm trying to compare.
+                </p>
+                <section id="typingAHand">
+                    <header>
+                        <h3>Typing a Hand</h3>
+                    </header>
+                    <p>
+                        What is meant by "typing a hand" is determining what is the best five card hand of a larger
+                        hand. This section will cover what is required to type a hand and how the operations scale with
+                        the size of the hand. The difficulty here comes with the fact that checking if a hand has a
+                        flush is a quite different operation that checking if a hand has a straight. I'll separate this
+                        section into three sections and hopefully it will become clear to the reader why once this
+                        section is completed.
+                    </p>
+                    <section id="briefNotation">
+                        <header>
+                            <h4>Brief Notation</h4>
+                        </header>
+                        <p>
+                            For the following sections discussing typing a hand, it will be useful to introduce a short
+                            notation for use in the complexity discussion of each typing operation. Let:<br />
+                            <math>
+                                <mtable>
+                                    <mtr>
+                                        <mspace width="1em" />
+                                        <mi>h</mi>
+                                        <mo>=</mo>
+                                        <mtext>number of cards in the hand</mtext>
+                                    </mtr>
+                                    <mtr>
+                                        <mspace width="1em" />
+                                        <mi>r</mi>
+                                        <mo>=</mo>
+                                        <mtext>number of card ranks</mtext>
+                                    </mtr>
+                                    <mtr>
+                                        <mspace width="1em" />
+                                        <mi>s</mi>
+                                        <mo>=</mo>
+                                        <mtext>number of card suits</mtext>
+                                    </mtr>
+                                    <mtr>
+                                        <mspace width="1em" />
+                                        <mi>q</mi>
+                                        <mo>=</mo>
+                                        <mtext>time complexity of sorting a hand</mtext>
+                                    </mtr>
+                                </mtable>
+                            </math>
+                        </p>
+                    </section>
+                    <section id="flush">
+                        <header>
+                            <h4>Flush<a class="link" href="#flush">¶</a></h4>
+                        </header>
+                        <p>
+                            The easiest way to find if a hand contains a flush is to iterate over the hand for each suit
+                            and count the number. The time complexity of this is approximately
+                            <math>
+                                <mi>s</mi>
+                                <mo>*</mo>
+                                <mi>h</mi>
+                            </math>.
+                        </p>
+                        <p>
+                            We could also create an array with length equal to
+                            <math>
+                                <mi>s</mi>
+                            </math>
+                            and store each suit count in each corresponding array element. This would allow us to
+                            iterate over the hand only once. The time complexity of this is approximately
+                            <math>
+                                <mi>h</mi>
+                            </math>.
+                        </p>
+                        <p>
+                            Lastly we could sort the hand by suit then iterate over it. This would take only one
+                            iteration like the latter method but would not need to store an array with size of
+                            <math>
+                                <mi>s</mi>
+                            </math>.
+                            The time complexity of this is approximately
+                            <math>
+                                <mi>q</mi>
+                                <mo>+</mo>
+                                <mi>h</mi>
+                            </math>.
+                        </p>
+                    </section>
+                    <section id="straight">
+                        <header>
+                            <h4>Straight</h4>
+                        </header>
+                        <!--TODO-->
+                    </section>
+                    <section id="sets">
+                        <header>
+                            <h4>Sets</h4>
+                        </header>
+                        <!--TODO-->
+                    </section>
+                </section>
+            </section>
+        </main>
+    </article>
+</body>
+
+</html>
