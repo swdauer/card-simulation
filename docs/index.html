@@ -116,11 +116,80 @@
                         section into three sections and hopefully it will become clear to the reader why once this
                         section is completed.
                     </p>
+                    <section id="briefNotation">
+                        <header>
+                            <h4>Brief Notation</h4>
+                        </header>
+                        <p>
+                            For the following sections discussing typing a hand, it will be useful to introduce a short
+                            notation for use in the complexity discussion of each typing operation. Let:<br />
+                            <math>
+                                <mtable>
+                                    <mtr>
+                                        <mspace width="1em" />
+                                        <mi>h</mi>
+                                        <mo>=</mo>
+                                        <mtext>number of cards in the hand</mtext>
+                                    </mtr>
+                                    <mtr>
+                                        <mspace width="1em" />
+                                        <mi>r</mi>
+                                        <mo>=</mo>
+                                        <mtext>number of card ranks</mtext>
+                                    </mtr>
+                                    <mtr>
+                                        <mspace width="1em" />
+                                        <mi>s</mi>
+                                        <mo>=</mo>
+                                        <mtext>number of card suits</mtext>
+                                    </mtr>
+                                    <mtr>
+                                        <mspace width="1em" />
+                                        <mi>q</mi>
+                                        <mo>=</mo>
+                                        <mtext>time complexity of sorting a hand</mtext>
+                                    </mtr>
+                                </mtable>
+                            </math>
+                        </p>
+                    </section>
                     <section id="flush">
                         <header>
                             <h4>Flush</h4>
                         </header>
-                        <!--TODO-->
+                        <p>
+                            The easiest way to find if a hand contains a flush is to iterate over the hand for each suit
+                            and count the number. The time complexity of this is approximately
+                            <math>
+                                <mi>s</mi>
+                                <mo>*</mo>
+                                <mi>h</mi>
+                            </math>.
+                        </p>
+                        <p>
+                            We could also create an array with length equal to
+                            <math>
+                                <mi>s</mi>
+                            </math>
+                            and store each suit count in each corresponding array element. This would allow us to
+                            iterate over the hand only once. The time complexity of this is approximately
+                            <math>
+                                <mi>h</mi>
+                            </math>.
+                        </p>
+                        <p>
+                            Lastly we could sort the hand by suit then iterate over it. This would take only one
+                            iteration like the latter method but would not need to store an array with size of
+                            <math>
+                                <mi>s</mi>
+                            </math>.
+                            The time complexity of this is approximately
+                            <math>
+                                <mi>q</mi>
+                                <mo>+</mo>
+                                <mi>h</mi>
+                            </math>.
+                        </p>
                     </section>
                     <section id="straight">
                         <header>
